@@ -24,12 +24,12 @@ function setLoginButton(){
 
   
 // <!-- подгружаем али-значок в карту -->
-var aliIcon = createIcon("ali32_btlh",24,24);
-var locIcon = createIcon("utilTileMouseHover",24,24);
+var aliIcon = createIcon("settings/corp_logo",24,24);
+var locIcon = createIcon("img/utilTileMouseHover",24,24);
 
 function createIcon(name,w,h){
 	var	img = new Image();
-		img.src = "img/"+name+".png";
+		img.src = name+".png";
 		img.style.height = h;
 		img.style.width = w;
 	return img;
@@ -50,7 +50,7 @@ function startApp(start){
 console.log("%c Starting app, going to recieve cookie tokens.",'background: #fff; color: green');
 // console.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
 getCookieJS('options', false, function(data){
-	console.log(data);
+	// console.log(data);
 	loadOptions(data);
 },this);
 
@@ -58,14 +58,14 @@ getCookieJS('map_access', false, function(data){// ищем сохраненны
 	// console.log("%c Data length is: "+data.length+" the value is below:","background: white; color: green");		
 	// // console.log(JSON.parse(data.value));
 	// charTokens = JSON.parse(data.value);
-	console.log(data);
+	// console.log(data);
 		connectToNode(data);
 	// console.log(data.replace(/"/g,''));
 	// console.log(parseInt(data.replace(/"/g,'')));
 	// console.log(typeof(parseInt(data.replace(/"/g,''))));
 	// console.log(typeof(parseInt(data.replace(/"/g,''))) && data.replace(/"/g,'').length == 7);
 	if(typeof(parseInt(data.replace(/"/g,''))) && data.replace(/"/g,'').length == 7){//проверяем что в куки сохранен только 7-значный код доступа, в противном случае чистим куки 
-		console.log('sending data');
+		// console.log('sending data');
 		socket.emit('user_auth', data);
 		showLogin("loading");	
 		// showLogin("login");	

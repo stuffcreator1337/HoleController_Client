@@ -52,25 +52,27 @@ function getSec(type,security){
 }
 
 
-function getColor(class5){
+function getColor(sysclass){
 	var color;
-	switch (class5) {
-		case "1":case "C1":        color = saved_options.color_C1; return color;        break;
-		case "2":case "C2":        color = saved_options.color_C2; return color;        break;
-		case "3":case "C3":        color = saved_options.color_C3; return color;        break;
-		case "4":case "C4":        color = saved_options.color_C4; return color;        break;
-		case "5":case "C5":        color = saved_options.color_C5; return color;        break;
-		case "6":case "C6":        color = saved_options.color_C6; return color;        break;
-		case "13":case "C13":        color = saved_options.color_C13; return color;        break;
-		case "14":case "C14":        color = saved_options.color_C14; return color;        break;
-		case "15":case "C15":        color = saved_options.color_C15; return color;        break;
-		case "16":case "C16":        color = saved_options.color_C16; return color;        break;
-		case "17":case "C17":       color = saved_options.color_C17; return color;        break;
-		case "18":case "C18":        color = saved_options.color_C18; return color;        break;
-		case "Abyss":case "Abyss":        color = saved_options.color_Abyss; return color;        break;
-		case "High":case "highsec":case "h":   			    color = saved_options.color_High; return color;        break;
+	switch (sysclass) {
+		case "1":case "C1":        				color = saved_options.color_C1; return color;        break;
+		case "2":case "C2":        				color = saved_options.color_C2; return color;        break;
+		case "3":case "C3":        				color = saved_options.color_C3; return color;        break;
+		case "4":case "C4":        				color = saved_options.color_C4; return color;        break;
+		case "5":case "C5":        				color = saved_options.color_C5; return color;        break;
+		case "6":case "C6":        				color = saved_options.color_C6; return color;        break;
+		case "13":case "C13":        			color = saved_options.color_C13; return color;        break;
+		case "14":case "C14":        			color = saved_options.color_C14; return color;        break;
+		case "15":case "C15":        			color = saved_options.color_C15; return color;        break;
+		case "16":case "C16":        			color = saved_options.color_C16; return color;        break;
+		case "17":case "C17":       			color = saved_options.color_C17; return color;        break;
+		case "18":case "C18":        			color = saved_options.color_C18; return color;        break;
+		case "High":case "highsec":case "h":   	color = saved_options.color_High; return color;        break;
 		case "Low":case "lowsec":case "l":		color = saved_options.color_Low; return color;        break;
-		case "Null":case "nullsec":case "n":      			color = saved_options.color_Null; return color;        break;
+		case "Null":case "nullsec":case "n":    color = saved_options.color_Null; return color;        break;
+		case "Abyss":case "Abyss":case "s":     color = saved_options.color_Abyss; return color;        break;
+		case "Thera":case "Thera":case "t":     color = saved_options.color_Thera; return color;        break;
+		case "Pochven":case "Pochven":case "p": color = saved_options.color_Pochven; return color;        break;
 		//default:       color = "kSpace"; return color;        break;
 	}
 }
@@ -149,6 +151,8 @@ function getWhEffect(effect,statics,type){
 		case 'n': st.color = saved_options.color_Null; st.type = "Null"; return st;		break;
 		case 'h': st.color = saved_options.color_High; st.type = "High"; return st;		break;
 		case 's': st.color = saved_options.color_Abyss; st.type = ""; return st;		break;
+		case 't': st.color = saved_options.color_Thera; st.type = ""; return st;		break;
+		case 'p': st.color = saved_options.color_Pochven; st.type = ""; return st;		break;
 		}
 	};
 	
@@ -221,7 +225,7 @@ function create_link(new_id,old_id,type){
 			"type" : type,
 			"user" : activeCharTab
 			};
-			console.log();
+			// console.log(jsonReady);
 	socket.emit('new_link', jsonReady);
 }
 
@@ -230,7 +234,7 @@ function ligthLocation(that,arr){
 	// console.log(arr);
 	// that.graph.eachNode(function(node){
 		// //console.log(node);
-		// if(node.id == "31002248"){node.data.$type = "icon";}else{node.data.$type = "circle";}
+		// if(node.id == homesystemID){node.data.$type = "icon";}else{node.data.$type = "circle";}
 		// node.data.$blur = 0;  				
 		// node.eachAdjacency(function(adj){
 			// // console.log(adj.data);
@@ -258,7 +262,7 @@ function ligthLocation(that,arr){
 					if(node1){
 						node1.data.$blur = 10;
 						node1.data.$scolor = "#00ff00";
-						if(node1.id == "31002248"){node1.data.$type = "homeLoc";}else{node1.data.$type = "location";}
+						if(node1.id == homesystemID){node1.data.$type = "homeLoc";}else{node1.data.$type = "location";}
 						that.fx.animate();
 					}
 				}
@@ -278,7 +282,7 @@ function ligthLocation(that,arr){
 				if(node1){
 					node1.data.$blur = 10;
 					node1.data.$scolor = "#00ff00";
-					if(node1.id == "31002248"){node1.data.$type = "homeLoc";}else{node1.data.$type = "location";}
+					if(node1.id == homesystemID){node1.data.$type = "homeLoc";}else{node1.data.$type = "location";}
 					that.fx.animate();
 				}
 			}

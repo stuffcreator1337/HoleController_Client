@@ -27,12 +27,14 @@ class OpenOptions{
 		this.color_C4 			= opt ? opt.color_C4 		: "#BB5500";
 		this.color_C5 			= opt ? opt.color_C5 		: "#CC2200";
 		this.color_C6 			= opt ? opt.color_C6 		: "#CC0000";
-		this.color_C13 			= opt ? opt.color_C13 		: "#00CCFF";
-		this.color_C14 			= opt ? opt.color_C14 		: "#00CCFF";
-		this.color_C15 			= opt ? opt.color_C15 		: "#00CCFF";
-		this.color_C16 			= opt ? opt.color_C16 		: "#00CCFF";
-		this.color_C17 			= opt ? opt.color_C17 		: "#00CCFF";
-		this.color_Abyss 		= opt ? opt.color_Abyss 	: "#999966";
+		this.color_C13 			= opt ? opt.color_C13 		: "#CC6699";
+		this.color_C14 			= opt ? opt.color_C14 		: "#999966";
+		this.color_C15 			= opt ? opt.color_C15 		: "#999966";
+		this.color_C16 			= opt ? opt.color_C16 		: "#999966";
+		this.color_C17 			= opt ? opt.color_C17 		: "#999966";
+		this.color_Abyss 		= opt ? opt.color_Abyss 	: "#996633";
+		this.color_Thera 		= opt ? opt.color_Thera 	: "#660033";
+		this.color_Pochven 		= opt ? opt.color_Pochven 	: "#660000";
 
 	}
 	save(opt){//console.log(this);
@@ -65,7 +67,7 @@ class OpenOptions{
 function loadOptions(data){
 	if(!data){data = '{}';}
 	// console.log(data);
-	console.log(JSON.parse(data));
+	// console.log(JSON.parse(data));
 	if(data){
 		saved_options = new OpenOptions(JSON.parse(data));		
 	}
@@ -106,7 +108,9 @@ function loadOptions(data){
 	saved_options.color_C15 	= saved_options.color_C15 	?	saved_options.color_C15		: "#999966";	setJsColor("color_C15",saved_options.color_C15);
 	saved_options.color_C16 	= saved_options.color_C16 	?	saved_options.color_C16		: "#999966";	setJsColor("color_C16",saved_options.color_C16);
 	saved_options.color_C17 	= saved_options.color_C17 	?	saved_options.color_C17		: "#999966";	setJsColor("color_C17",saved_options.color_C17);
-	saved_options.color_Abyss 	= saved_options.color_Abyss ?	saved_options.color_Abyss	: "#999966";	setJsColor("color_Abyss",saved_options.color_Abyss);
+	saved_options.color_Abyss 	= saved_options.color_Abyss ?	saved_options.color_Abyss	: "#996633";	setJsColor("color_Abyss",saved_options.color_Abyss);
+	saved_options.color_Thera 	= saved_options.color_Thera ?	saved_options.color_Thera	: "#660033";	setJsColor("color_Thera",saved_options.color_Thera);
+	saved_options.color_Pochven = saved_options.color_Pochven ?	saved_options.color_Pochven	: "#660000";	setJsColor("color_Pochven",saved_options.color_Pochven);
 	
 	saved_options.save();
 // console.log(document.getElementById("color_High"));
@@ -114,12 +118,12 @@ function loadOptions(data){
 
 
 fullmap = fullmap1(saved_options);
-constellations = constellations1(saved_options);
+// constellations = constellations1(saved_options);
 systemJumps = systemJumps1(saved_options);
 regions = regions1(saved_options);
-holeTypes = holeTypes1(saved_options);
+// holeTypes = holeTypes1(saved_options);
 whSysInfo = whSysInfo1(saved_options);
-console.log(saved_options);
+// console.log(saved_options);
 }
 function setJsColor(id,color){
 	document.getElementById(id) ? (document.getElementById(id).style.color = color, document.getElementById(id).style.backgroundColor = color, document.getElementById(id).value = color) : null;
@@ -147,7 +151,9 @@ function setColorDefault(){
 	setJsColor("color_C15","#999966");opt_setNewColor(document.getElementById("color_C15"),"#999966")
 	setJsColor("color_C16","#999966");opt_setNewColor(document.getElementById("color_C16"),"#999966")
 	setJsColor("color_C17","#999966");opt_setNewColor(document.getElementById("color_C17"),"#999966")
-	setJsColor("color_Abyss","#999966");	opt_setNewColor(document.getElementById("color_Abyss"),"#999966")
+	setJsColor("color_Abyss","#999966");	opt_setNewColor(document.getElementById("color_Abyss"),"#996633")
+	setJsColor("color_Thera","#660033");	opt_setNewColor(document.getElementById("color_Thera"),"#660033")
+	setJsColor("color_Pochven","#660000");	opt_setNewColor(document.getElementById("color_Pochven"),"#660000")
 }
 function check(that){
 	console.log(that.id);

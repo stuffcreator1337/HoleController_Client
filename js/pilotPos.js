@@ -115,8 +115,8 @@ function createPilotTr(name,loc,ship,last_time,loc_time,charID,online){
 		// var aid= document.createElement('a');
 			// aid.id = "pilotSys-"+sys;
 			aid.setAttribute('sysID',loc);
-			// console.log(fullmap[loc]["class5"]);
-			aid.style.color = getColor(fullmap[loc]["class5"]);
+			// console.log(fullmap[loc]["sysclass"]);
+			aid.style.color = getColor(fullmap[loc]["sysclass"]);
 			// aid.className = "systemName";
 			aid.setAttribute("onmouseover", "highlight('"+loc+"');");
 			aid.setAttribute("onmouseout", "unhighlight('"+loc+"');");

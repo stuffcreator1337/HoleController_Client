@@ -1921,32 +1921,40 @@ var MouseEventsManager = new Class({
     htmlCanvas.oncontextmenu = $.lambda(false);
     $.addEvents(htmlCanvas, {
       'mouseup': function(e, win) {
+	  // console.log('line 1924');
         var event = $.event.get(e, win);
         that.handleEvent('MouseUp', e, win, 
             that.makeEventObject(e, win), 
             $.event.isRightClick(event));
       },
       'mousedown': function(e, win) {
+	  // console.log('line 1931');
         var event = $.event.get(e, win);
         that.handleEvent('MouseDown', e, win, that.makeEventObject(e, win), 
             $.event.isRightClick(event));
       },
       'mousemove': function(e, win) {//console.log(e,win);
+	  // console.log('line 1937-2');
         that.handleEvent('MouseMove', e, win, that.makeEventObject(e, win));
       },
       'mouseover': function(e, win) {
+	  // console.log('line 1941-1');
         // that.handleEvent('MouseOver', e, win, that.makeEventObject(e, win));
       },
       'mouseout': function(e, win) {
+	  // console.log('line 1945-5');
         that.handleEvent('MouseOut', e, win, that.makeEventObject(e, win));
       },
       'touchstart': function(e, win) {
+	  // console.log('line 1949');
         that.handleEvent('TouchStart', e, win, that.makeEventObject(e, win));
       },
       'touchmove': function(e, win) {
+	  // console.log('line 1953');
         that.handleEvent('TouchMove', e, win, that.makeEventObject(e, win));
       },
       'touchend': function(e, win) {
+	  // console.log('line 1957');
         that.handleEvent('TouchEnd', e, win, that.makeEventObject(e, win));
       }
     });
@@ -2114,6 +2122,12 @@ Extras.Classes.Events = new Class({
 	if((type == 'line')||(type == 'punktir')||(type == 'labelline')||(type == 'bezier')||(type == 'bezier-punktir')){return true;}else {return false;}
   },
   onMouseUp: function(e, win, event, isRightClick) {
+	  // console.log(this.canvas.translateOffsetY);
+					// document.cookie=this.pressed.id+"X="+this.pressed.pos.x+"; " +expires;
+					// document.cookie=this.pressed.id+"Y="+this.pressed.pos.y+"; " +expires;	
+					setCookie("canvasoffsetX",this.canvas.translateOffsetX);
+					setCookie("canvasoffsetY",this.canvas.translateOffsetY);
+		// console.log(document.cookie);
 	if(morphBusy)return;
 	  // console.log('MAIN TEST');
 	// console.log("onMouseUp");
@@ -2385,6 +2399,7 @@ Extras.Classes.Events = new Class({
   },
   
   onTouchStart: function(e, win, event) {
+	  console.log('line 2388');
     var evt = $.event.get(e, win), label;
     if(this.dom && (label = this.isLabel(e, win))) {
       this.touched = this.viz.graph.getNode(label.id);
@@ -2395,6 +2410,7 @@ Extras.Classes.Events = new Class({
   },
   
   onTouchMove: function(e, win, event) {
+	  console.log('line 2398');
     var evt = $.event.get(e, win);
     if(this.touched) {
       this.touchMoved = true;
@@ -2403,6 +2419,7 @@ Extras.Classes.Events = new Class({
   },
   
   onTouchEnd: function(e, win, event) {
+	  console.log('line 2408');
     var evt = $.event.get(e, win);
     if(this.touched) {
       if(this.touchMoved) {
@@ -2478,6 +2495,7 @@ Extras.Classes.Tips = new Class({
   },
   
   onMouseMove: function(e, win, opt) {
+	  // console.log('line 2485');
 	// if(isExtra(e))return;
 	  // console.log(isExtra(e));
     if(this.dom && this.isLabel(e, win)) {
@@ -2664,6 +2682,7 @@ Extras.Classes.NodeStyles = new Class({
   },
 
   onClick: function(node) {
+	  console.log('line 2667');
     if(!node) return;
     var nStyles = this.nodeStylesOnClick;
     if(!nStyles) return;
@@ -2690,6 +2709,7 @@ Extras.Classes.NodeStyles = new Class({
   },
   
   onMouseMove: function(e, win, event) {
+	  // console.log('line 2699');
 	// if(isExtra(e))return;
 	  // console.log(isExtra(e));
     //if mouse button is down and moving set move=true
@@ -2988,7 +3008,7 @@ var Canvas;
         }
       }
       this.element.appendChild(this.labelContainer);
-	  console.log(this.element);
+	  // console.log(this.element);
       wrapper.appendChild(this.element);
       //Update canvas position when the page is scrolled.
       var timer = null, that = this;
@@ -3116,6 +3136,7 @@ var Canvas;
     translate: function(x, y, disablePlot) {
       this.translateOffsetX += x*this.scaleOffsetX;
       this.translateOffsetY += y*this.scaleOffsetY;
+	  // console.log(this.translateOffsetX,this.translateOffsetY);
       for(var i=0, l=this.canvases.length; i<l; i++) {
         this.canvases[i].translate(x, y, disablePlot);
       }
@@ -4293,7 +4314,7 @@ $jit.Graph = new Class({
 				socket.emit('sigs_request', {'user':activeCharTab, 'id':node.data.$sysid, 'name':node.name, 'color':node.data.$color.substring(1, 7)});
 				
 				node.setData('dim', 17, 'end');
-				if (selnode == '31002248'){
+				if (selnode == homesystemID){
 					window.iconWidth=36;
 					window.iconHeight=36;
 				}
@@ -4315,7 +4336,7 @@ $jit.Graph = new Class({
 			node.eachAdjacency(function(adj){
 				g.graph.removeAdjacence(adj.nodeFrom.id,adj.nodeTo.id)
 			});	
-			if (node.id!="31002248"){
+			if (node.id!=homesystemID){
 				g.graph.removeNode(node.id);
 				domElement.style.display = 'none';
 			}		
@@ -4328,7 +4349,7 @@ $jit.Graph = new Class({
 	},
 	getOrientation: function(id1,j){
 		for(var i=0;i<j.length;i++){
-			if((((id1 == j[i].sys1)&&(j[i].sys2 == '31002248'))||((id1 == j[i].sys2)&&(j[i].sys1 == '31002248')))&&(j[i].status == 999)){
+			if((((id1 == j[i].sys1)&&(j[i].sys2 == homesystemID))||((id1 == j[i].sys2)&&(j[i].sys1 == homesystemID)))&&(j[i].status == 999)){
 				return true;				
 			}
 		}
@@ -4351,7 +4372,7 @@ $jit.Graph = new Class({
 		}		
 	},
 	replot: function(json,g,data,message,state){
-		console.log(message);
+		// console.log(message);
 		if(state != 'rgraph'){
 			this.setMargins(g);
 			var json2 = spacetreeParse(data[0])
@@ -4417,7 +4438,7 @@ $jit.Graph = new Class({
 	setEmptyEdge: function(g){	
 		g.graph.eachNode(function(node){
 			node.eachAdjacency(function(adj) {
-				if((node.id == '31002248')&&(adj.nodeTo.data.$orn == 'right')){
+				if((node.id == homesystemID)&&(adj.nodeTo.data.$orn == 'right')){
 					adj.setData('type','none');
 					// console.log(adj.nodeTo.data.$orn);
 				}else{
@@ -4432,6 +4453,9 @@ $jit.Graph = new Class({
 				adj["data"].$type = 'bezier-punktir';
 			}else{
 				adj["data"].$type = 'bezier';
+			}
+			if(j.status == "999"){
+				adj["data"].$type = 'none';
 			}
 			if(j.mc == 1){
 				adj["data"].$color = '#FF4719';
@@ -4461,24 +4485,28 @@ $jit.Graph = new Class({
 	},
 	socket: function (socket,json,g,state){		
 		var that = this;
-		socket.on('map_replot', function(data){
-			that.replot(json,g,data,'map_replot',state);
+		socket.on('map_replot', function(data_map_replot){
+			that.replot(json,g,data_map_replot,'map_replot',state);
 		});		
-		socket.on('new_links_found', function(data){
-			that.replot(json,g,data,'map_replot',state);
+		socket.on('new_links_found', function(data_new_links){
+			// console.log(data_new_links[0].length);			
+			// console.log(data_new_links[0]);
+			// data_new_links[0].pop();
+			// console.log(data_new_links[0]);
+			that.replot(json,g,data_new_links,'map_replot',state);
 		 });
-		socket.on('link_edit_from_node', function(data){
+		socket.on('link_edit_from_node', function(data_link_edit){
 		// console.log(data[0]);
-			that.replot(json,g,data,'map_replot',state);
+			that.replot(json,g,data_link_edit,'map_replot',state);
 			// that.setProps(g,data[0]);
 		 });
-		socket.on('new_chars_position', function(data){
+		socket.on('new_chars_position', function(data_chars){
 			// console.log("%c New char location recieved","background:pink;color:black");
-			if(data[1] == 'all'){				
+			if(data_chars[1] == 'all'){				
 				var old_charLoc = clone(clientInfo.charData);
-				clientInfo.updData(data[0]);
-				updPilotPos(data[0]);
-				ligthLocation(g,data[0]);
+				clientInfo.updData(data_chars[0]);
+				updPilotPos(data_chars[0]);
+				ligthLocation(g,data_chars[0]);
 			}
 		});
 	},
@@ -4639,7 +4667,7 @@ $jit.Graph = new Class({
 	return this.edges[obj.id][obj2.id];
 	},
 	isKspace: function(sys) {
-	if ((fullmap[sys].class5 == "High")||(fullmap[sys].class5 == "Low")||(fullmap[sys].class5 == "Null")) {return true;}
+	if ((fullmap[sys].sysclass == "High")||(fullmap[sys].sysclass == "Low")||(fullmap[sys].sysclass == "Null")) {return true;}
 	},
 	setEdgeProps: function(edge,adjData){
 		if(adjData){
@@ -4665,10 +4693,10 @@ $jit.Graph = new Class({
 		hovered.data.$scolorOrg 	= hovered.data.$scolor;
 		hovered.data.$colorOrg 		= hovered.data.$color;
 	},
-	restoreOrgInfo: function(data){
-		data.$blur 		= data.$blurOrg;
-		data.$scolor 	= data.$scolorOrg || '#CCCCBB';
-		data.$color 	= data.$colorOrg;
+	restoreOrgInfo: function(dataRest){
+		dataRest.$blur 		= dataRest.$blurOrg;
+		dataRest.$scolor 	= dataRest.$scolorOrg || '#CCCCBB';
+		dataRest.$color 	= dataRest.$colorOrg;
 		// console.log(data);
 	},
 	getEdgeData: function(data,json){
@@ -4727,6 +4755,9 @@ $jit.Graph = new Class({
 	var name = name.replace(" (Low)", "");
 	var name = name.replace(" (High)", "");
 	var name = name.replace(" (Null)", "");
+	var name = name.replace(" (Abyss)", "");
+	var name = name.replace(" (Thera)", "");
+	var name = name.replace(" (Pochven)", "");
 	return name;
 	},
 
@@ -6408,7 +6439,7 @@ Graph.Op = {
                 viz.graph.eachNode(function(elem) {
                     if(elem.ignore) return;
                     elem.eachAdjacency(function(adj) {
-						if(elem.id == '31002248' && adj.nodeTo.data.$orn == 'right')adj.setData('type','none');
+						if(elem.id == homesystemID && adj.nodeTo.data.$orn == 'right')adj.setData('type','none');
 					
 					// adj.data
                         if(adj.nodeFrom.ignore || adj.nodeTo.ignore) return;
@@ -8345,9 +8376,9 @@ var Loader = {
       }
       this.graph = this.construct(json);
       if($.type(json) != 'array'){
-        this.root = "31002248";
+        this.root = homesystemID;
       } else {
-        this.root = "31002248";
+        this.root = homesystemID;
       }
     },
 	
@@ -9365,6 +9396,11 @@ $jit.ST= (function() {
         */    
       onClick: function (id, options) {
         var canvas = this.canvas, that = this, Geom = this.geom, config = this.config;
+		getCookieJS('canvasoffsetX', false, function(dataX){
+			getCookieJS('canvasoffsetY', false, function(dataY){
+				canvas.translate(dataX,dataY);
+			},this);
+		},this);
         var innerController = {
             Move: {
         	    enable: true,
@@ -11110,8 +11146,8 @@ $jit.RGraph = new Class( {
       this.compute('end');
 
       // first constraint
-	  // console.log(obj);
-	  // console.log(obj.parent);
+	  console.log(obj);
+	  console.log(obj.parent);
       var thetaDiff = obj.theta - obj.parent.endPos.theta;
       this.graph.eachNode(function(elem){
         elem.endPos.set(elem.endPos.getp().add($P(thetaDiff, 0)));

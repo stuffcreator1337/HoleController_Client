@@ -2,10 +2,13 @@ function defineStaticType(sys_class,id,sys){
 	var static_type = "";
 	if (sys_class == "Null") {
 		var regId = sys["regionID"];
+		//when in Null system return regin name instead
 		static_type = regions[0]["regions"][regId]["regionName"];
 	}
 	else if ((sys_class == "High") || (sys_class == "Low")) {static_type = "J"+sys["hubj"]+"A"+sys["huba"]+"D"+sys["hubd"]+"R"+sys["hubr"]+"H"+sys["hubh"];		}
 	else if(sys_class == "Abyss"){static_type = 'Abyss';}
+	else if(sys_class == "Thera"){static_type = 'Thera';}
+	else if(sys_class == "Pochven"){static_type = 'Pochven';}
 	else (static_type = whSysInfo[0]["wh_info"][id]["statics"])
 	return static_type;
 }
@@ -61,22 +64,22 @@ function parse(json){
 		// console.log(typeof(id))
 		var sys = fullmap[id];
 		// console.log(id,sys);
-		var static_type = defineStaticType(sys["class5"],id,sys);
+		var static_type = defineStaticType(sys["sysclass"],id,sys);
 
 		
 		var sys_shape1;
-		if (id == "31002248")	{	sys_shape1 = "icon";	}
+		if (id == homesystemID)	{	sys_shape1 = "icon";	}
 		else						{	sys_shape1 = "circle";	}
 
 		var effect = "";
-		if(sys["class5"].substring(0, 1) == "C"){
+		if(sys["sysclass"].substring(0, 1) == "C"){
 			var WhSysInfo = whSysInfo[0]["wh_info"][id];
 			effect = WhSysInfo["effect"];
 			if(effect){effect = effect+"<br>";}
 		}
 		var  part = {};
 		part["system"] = sys["solarSystemName"];
-		part["class"] = sys["class5"];
+		part["class"] = sys["sysclass"];
 		part["color"] = sys["color"];
 		part["shape"] = sys_shape1;
 		part["effect"] = effect;
@@ -184,18 +187,28 @@ function parse(json){
 		return 	j2;
 	};
 	
-	//console.log(j);
+	var home_static_type = defineStaticType(fullmap[homesystemID]["sysclass"],homesystemID,fullmap[homesystemID]);
+	var homesystemSavedColor = saved_options.color_C5;
+	switch(fullmap[homesystemID]["sysclass"]) {
+		case 'C1':homesystemSavedColor = saved_options.color_C1;break;
+		case 'C2':homesystemSavedColor = saved_options.color_C2;break;
+		case 'C3':homesystemSavedColor = saved_options.color_C3;break;
+		case 'C4':homesystemSavedColor = saved_options.color_C4;break;
+		case 'C5':homesystemSavedColor = saved_options.color_C5;break;
+		case 'C6':homesystemSavedColor = saved_options.color_C6;break;
+		default: homesystemSavedColor = saved_options.color_C5;
+	}
 	var new_json,
 		homepart = {
 			"id": "", 
-			"name": "J111518",
+			"name": whSysInfo[0]["wh_info"][homesystemID]["name"],
 			"data": {
-				"$color": saved_options.color_C5, 
+				"$color": homesystemSavedColor, 
 				"$type": "icon",
-				"$class": "C5",
-				"$effect": "",
-				"$statics": "H296",
-				"$sysid": "31002248",
+				"$class": fullmap[homesystemID]["sysclass"],
+				"$effect": whSysInfo[0]["wh_info"][homesystemID]["effect"],
+				"$statics": home_static_type,
+				"$sysid": homesystemID,
 				"$residents": "",
 				"$pos": "",
 				"$date": ""
@@ -261,19 +274,19 @@ function spacetreeParse(json){
 		}
 		var sys = fullmap[parentTree];
 		var effect = "";
-		if(sys["class5"].substring(0, 1) == "C"){
+		if(sys["sysclass"].substring(0, 1) == "C"){
 			var WhSysInfo = whSysInfo[0]["wh_info"][parentTree];
 			effect = WhSysInfo["effect"];
 			if(effect){effect = effect+"<br>";}
 		}
-		var static_type = defineStaticType(sys["class5"],parentTree,sys);
+		var static_type = defineStaticType(sys["sysclass"],parentTree,sys);
 		var tree = {      
 			id: parentTree,
 			name: sys["solarSystemName"],
 			data: {
 				"$color": sys["color"], 
 				// "$type": "icon",
-				"$class": sys["class5"],
+				"$class": sys["sysclass"],
 				"$effect": effect,
 				"$statics": static_type,
 				"$sysid": parentTree
@@ -294,11 +307,11 @@ function spacetreeParse(json){
 								founder	:	"",
 								status	:	"999",
 								sys1	:	j[i].sys1,
-								sys2	:   "31002248"});
-					var json2 = createTree(j,"31002248",0);
-					
+								sys2	:   homesystemID});
+					var json2 = createTree(j,homesystemID,0);
+					// console.log(json2);
 					for(var k=0;k<j.length;k++){
-						if(!j[k].refined){var json2 = createTree(j,"31002248",0);}
+						if(!j[k].refined){var json2 = createTree(j,homesystemID,0);}
 					}
 					return json2;
 					// tree = json2;
@@ -310,7 +323,7 @@ function spacetreeParse(json){
 		// console.log(tree);
 		return tree;
 	};
-	var json1 = createTree(json,"31002248",0);
+	var json1 = createTree(json,homesystemID,0);
 	var n2Json = [];
 	
 	// var j = json;
@@ -323,8 +336,8 @@ function spacetreeParse(json){
 						// founder	:	"",
 						// status	:	"999",
 						// sys1	:	j[i].sys1,
-						// sys2	:   "31002248"});
-			// var json2 = createTree(j,"31002248",0);
+						// sys2	:   homesystemID});
+			// var json2 = createTree(j,homesystemID,0);
 			// return  json2;
 			// // console.log(json2);
 		// };
@@ -343,7 +356,7 @@ function CheckStatus999(id1,j){
 			// console.log(j.length);
 	for(var i=0;i<j.length;i++){		
 		// console.log(id1,j[i].sys1,j[i].sys2,j[i].status);
-		if((((id1 == j[i].sys1)&&(j[i].sys2 == '31002248'))||((id1 == j[i].sys2)&&(j[i].sys1 == '31002248')))&&(j[i].status == 999)){
+		if((((id1 == j[i].sys1)&&(j[i].sys2 == homesystemID))||((id1 == j[i].sys2)&&(j[i].sys1 == homesystemID)))&&(j[i].status == 999)){
 			// console.log(id1,j.sys1,j.sys2,j.status);
 			return true;
 			

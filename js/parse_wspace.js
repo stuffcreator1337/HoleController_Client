@@ -17,7 +17,7 @@ for(var i=0; i<data.length; i++){
 for(var i=0; i<exits.length;i++){
 	// console.log("processing system: "+fullmap[exits[i]].solarSystemName);
 	// console.log("processing system: "+exits[i]);
-	var ex = wparse(31002248,parseInt(exits[i]),data);
+	var ex = wparse(homesystemID,parseInt(exits[i]),data);
 	if(ex.distance != -1){
 	// console.log("getting distance2");
 		var destSys = exits[i];

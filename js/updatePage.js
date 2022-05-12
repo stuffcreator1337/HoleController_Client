@@ -114,12 +114,12 @@ function setWspaceInfo(id,charID){
 		stType[1] = sys["statics"].substring(5, 9);
 		statC[1] = sys["statics"].substring(9, 10);			
 		// console.log(stType[0], statC[0], stType[1], statC[1]);
-		var currColor = getColor(sys["class5"]);
+		var currColor = getColor(sys["sysclass"]);
 		var st = 1;
 		if(statC[1]){ st = 2;}	
 		// console.log("going to create tr1");
 		//Current class: C5
-		var tr1 = docCreateElem('tr','sys_class','activeLeft',"<text>Current class: <font color="+currColor+">"+sys["class5"]+"<br></font></text>",'',wh_info);
+		var tr1 = docCreateElem('tr','sys_class','activeLeft',"<text>Current class: <font color="+currColor+">"+sys["sysclass"]+"<br></font></text>",'',wh_info);
 		
 		for(var i=0;i<st;i++){
 			var tr2 = docCreateElem('tr',"static"+i,'activeLeft','old','',wh_info);
@@ -136,7 +136,7 @@ function setWspaceInfo(id,charID){
 			// tr3.style='cursor: help; border-bottom: 1px dashed;';sys['effect']
 			tr3.setAttribute("onmouseover", "domTT_activate(this, event, 'content', document.getElementById('effectTool'), 'trail', true);");
 		var effectTool = $jit.id('effectTool');
-		effectTool.innerHTML = setEffect(sys["effect"], sys["class5"]).innerHTML;	
+		effectTool.innerHTML = setEffect(sys["effect"], sys["sysclass"]).innerHTML;	
 	}
 }
 

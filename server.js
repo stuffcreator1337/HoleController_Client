@@ -1,5 +1,15 @@
 var socket = io('http://'+currentServer["serv"]+':'+currentServer["port"]);
- console.log(socket);
+ // console.log(socket);
+ 
+function setactivetab(){
+	var allTabs = document.getElementById("top_tr");
+	var tdTabs = allTabs.getElementsByTagName("td");
+	// console.log(allTabs,tdTabs);
+	tdTabs[0].className = "active_top_selected";
+	tdTabs[1].className = "active_top_selected";
+	activeCharTab = tdTabs[0].getAttribute('buttoncharid');
+	console.log("%c Setting active tab to: "+activeCharTab,"background: #fff; color: green");		
+}
 function connectToNode(cookie){
 	console.log('CONNECTED??');
 // var CurrentUser = activeCharTab; 
@@ -26,23 +36,18 @@ socket.on('auth_success_firstlogin', function(data){//получаем подт�
 			createTab(atob(chardata[i]['CharacterName']),chardata[i]['CharacterID'],i,cookie);	
 		}
 		setTimeout(function(){
-			var allTabs = document.getElementById("top_tr");
-			var tdTabs = allTabs.getElementsByTagName("td");
-			console.log(allTabs,tdTabs);
-			tdTabs[0].className = "active_top_selected";
-			tdTabs[1].className = "active_top_selected";
-			// activeCharTab = tdTabs[0].firstChild.innerHTML;
-			activeCharTab = tdTabs[0].getAttribute('buttoncharid');
-			console.log("%c Setting active tab to: "+activeCharTab,"background: #fff; color: green");
+			setactivetab();
 		},1000);
 		
 		
-		for(let s=0;s<chardata.length;s++){
-			if(chardata[s]['CharacterID'] == activeCharTab){
-				updatePanel(chardata[s]["solar_system_id"],chardata[s]['CharacterID'], 'charname_holder');
+		setTimeout(function(){
+			for(let s=0;s<chardata.length;s++){
+				if(chardata[s]['CharacterID'] == activeCharTab){
+					updatePanel(chardata[s]["solar_system_id"],chardata[s]['CharacterID'], 'charname_holder');
+				}
+				clientInfo.charSys(chardata[s]["solar_system_id"],chardata[s]['CharacterID']);
 			}
-			clientInfo.charSys(chardata[s]["solar_system_id"],chardata[s]['CharacterID']);
-		}
+		},2000);
 		
 		
 		init(mapdata,[],"","initiate");
@@ -67,13 +72,7 @@ socket.on('auth_success_addcharacter', function(data){//получаем под�
 		for(var i=0;i<chardata.length;i++){
 			createTab(atob(chardata[i]['CharacterName']),chardata[i]['CharacterID'],i,cookie);	
 		}
-		var allTabs = document.getElementById("top_tr");
-		var tdTabs = allTabs.getElementsByTagName("td");
-		tdTabs[0].className = "active_top_selected";
-		tdTabs[1].className = "active_top_selected";
-		// activeCharTab = tdTabs[0].firstChild.innerHTML;
-		activeCharTab = tdTabs[0].getAttribute('buttoncharid');
-		console.log("%c Setting active tab to: "+activeCharTab,"background: #fff; color: green");
+		setactivetab();
 		
 		
 		for(let s=0;s<chardata.length;s++){
@@ -82,13 +81,6 @@ socket.on('auth_success_addcharacter', function(data){//получаем под�
 			}
 			clientInfo.charSys(chardata[s]["solar_system_id"],chardata[s]['CharacterID']);
 		}
-		// var allTabs = document.getElementById("top_tr");
-		// var tdTabs = allTabs.getElementsByTagName("td");
-		// tdTabs[0].className = "active_top_selected";
-		// tdTabs[1].className = "active_top_selected";
-		// activeCharTab = tdTabs[0].firstChild.innerHTML;
-		// activeCharTab = tdTabs[0].getAttribute('buttoncharid');
-		// console.log("%c Setting active tab to: "+activeCharTab,"background: #fff; color: green");
 		// console.log("map_connections_for:"+activeCharTab); 
 		
 		// init(data[0].map,data[0].residents,"","initiate");
@@ -166,13 +158,13 @@ socket.on('token_error', function(data){
 
 socket.on('privat_char_update', function(data){
 	cookie = cookie.replace(/"/g,'');
-	console.log(cookie,data[1]);
+	// console.log(cookie,data[1]);
 	if(cookie == data[1]){
 		if(data[0].length == 0){showLogin("login");switchPage('login');return;}
-		console.log(data,activeCharTab);
+		// console.log(data,activeCharTab);
 		clientInfo.updData(data[0]);
 
-		console.log(data[0].length);
+		// console.log(data[0].length);
 		showLogin("loading");	
 		startingMap('initiate');
 		var chardata = data[0];
@@ -180,12 +172,7 @@ socket.on('privat_char_update', function(data){
 		for(var i=0;i<chardata.length;i++){
 		createTab(atob(chardata[i]['CharacterName']),chardata[i]['CharacterID'],i,cookie);	
 		}
-		var allTabs = document.getElementById("top_tr");
-		var tdTabs = allTabs.getElementsByTagName("td");
-		tdTabs[0].className = "active_top_selected";
-		tdTabs[1].className = "active_top_selected";
-		activeCharTab = tdTabs[0].getAttribute('buttoncharid');
-		console.log("%c Setting active tab to: "+activeCharTab,"background: #fff; color: green");		
+		setactivetab();	
 
 		for(let s=0;s<data[0].length;s++){
 		if(data[0][s]['CharacterID'] == activeCharTab){

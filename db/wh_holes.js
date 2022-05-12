@@ -1,88 +1,778 @@
 function holeTypes1(data){return {"holes" : {
-"H121" : { "from" : "", "to" : "1" },
-"Q317" : { "from" : "6", "to" : "1" },
-"P060" : { "from" : "4", "to" : "1" },
-"V301" : { "from" : "3", "to" : "1" },
-"Y790" : { "from" : "5", "to" : "1" },
-"Z647" : { "from" : "2", "to" : "1" },
-"Z971" : { "from" : "high", "to" : "1" },
-"C125" : { "from" : "", "to" : "2" },
-"D364" : { "from" : "5", "to" : "2" },
-"D382" : { "from" : "2", "to" : "2" },
-"G024" : { "from" : "6", "to" : "2" },
-"I182" : { "from" : "3", "to" : "2" },
-"N766" : { "from" : "4", "to" : "2" },
-"R943" : { "from" : "", "to" : "2" },
-"C247" : { "from" : "4", "to" : "3" },
-"L477" : { "from" : "6", "to" : "3" },
-"M267" : { "from" : "5", "to" : "3" },
-"N968" : { "from" : "3", "to" : "3" },
-"O477" : { "from" : "2", "to" : "3" },
-"O883" : { "from" : "1", "to" : "3" },
-"X702" : { "from" : "k-space", "to" : "3" },
-"E175" : { "from" : "5", "to" : "4" },
-"M609" : { "from" : "", "to" : "4" },
-"O128" : { "from" : "", "to" : "4" },
-"T405" : { "from" : "3", "to" : "4" },
-"X877" : { "from" : "4", "to" : "4" },
-"Y683" : { "from" : "2", "to" : "4" },
-"Z457" : { "from" : "6", "to" : "4" },
-"H296" : { "from" : "5", "to" : "5" },
-"H900" : { "from" : "4", "to" : "5" },
-"L614" : { "from" : "", "to" : "5" },
-"M555" : { "from" : "highsec", "to" : "5" },
-"N062" : { "from" : "2", "to" : "5" },
-"N432" : { "from" : "lowsec", "to" : "5" },
-"N432" : { "from" : "nullsec", "to" : "5" },
-"N770" : { "from" : "3", "to" : "5" },
-"V911" : { "from" : "6", "to" : "5" },
-"A982" : { "from" : "3", "to" : "6" },
-"B041" : { "from" : "", "to" : "6" },
-"R474" : { "from" : "2", "to" : "6" },
-"S804" : { "from" : "1", "to" : "6" },
-"U319" : { "from" : "", "to" : "6" },
-"U574" : { "from" : "4", "to" : "6" },
-"V753" : { "from" : "5", "to" : "6" },
-"W237" : { "from" : "6", "to" : "6" },
-"A641" : { "from" : "highsec", "to" : "highsec" },
-"B274" : { "from" : "2", "to" : "highsec" },
-"B449" : { "from" : "nullsec", "to" : "highsec" },
-"B520" : { "from" : "", "to" : "highsec" },
-"D792" : { "from" : "5", "to" : "highsec" },
-"D792" : { "from" : "6", "to" : "highsec" },
-"N110" : { "from" : "1", "to" : "highsec" },
-"S047" : { "from" : "", "to" : "highsec" },
-"D845" : { "from" : "3", "to" : "highsec" },
-"A239" : { "from" : "2", "to" : "lowsec" },
-"C140" : { "from" : "5", "to" : "lowsec" },
-"C140" : { "from" : "6", "to" : "lowsec" },
-"C391" : { "from" : "", "to" : "lowsec" },
-"J244" : { "from" : "1", "to" : "lowsec" },
-"N290" : { "from" : "", "to" : "lowsec" },
-"N944" : { "from" : "nullsec", "to" : "lowsec" },
-"R051" : { "from" : "", "to" : "lowsec" },
-"U210" : { "from" : "3", "to" : "lowsec" },
-"C248" : { "from" : "", "to" : "nullsec" },
-"E545" : { "from" : "2", "to" : "nullsec" },
-"K329" : { "from" : "", "to" : "nullsec" },
-"K346" : { "from" : "3", "to" : "nullsec" },
-"S199" : { "from" : "nullsec", "to" : "nullsec" },
-"V283" : { "from" : "", "to" : "nullsec" },
-"Z060" : { "from" : "1", "to" : "nullsec" },
-"Z142" : { "from" : "5", "to" : "nullsec" },
-"Z142" : { "from" : "6", "to" : "nullsec" },
-"K162" : { "from" : "", "to" : "" },
-"A009" : { "from" : "", "to" : "13" },
-"E004" : { "from" : "", "to" : "1" },
-"L005" : { "from" : "", "to" : "2" },
-"Z006" : { "from" : "", "to" : "3" },
-"M001" : { "from" : "", "to" : "4" },
-"C008" : { "from" : "", "to" : "5" },
-"G008" : { "from" : "", "to" : "6" },
-"Q003" : { "from" : "", "to" : "nullsec" },
-"S877" : { "from" : "", "to" : "14" },
-"B735" : { "from" : "", "to" : "15" },
-"V928" : { "from" : "", "to" : "16" },
-"C414" : { "from" : "", "to" : "17" },
-"R259" : { "from" : "", "to" : "18" }}}};
-// holeTypes = JSON.parse(holeTypes);
+	"Z971": {
+		"from": "",
+		"to": 1,
+		"time": 960,
+		"mass": 100000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"R943": {
+		"from": "",
+		"to": 2,
+		"time": 960,
+		"mass": 750000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"X702": {
+		"from": "",
+		"to": 3,
+		"time": 1440,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"O128": {
+		"from": "",
+		"to": 4,
+		"time": 1440,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"N432": {
+		"from": "",
+		"to": 5,
+		"time": 1440,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"M555": {
+		"from": "",
+		"to": 5,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"B041": {
+		"from": "",
+		"to": 6,
+		"time": 2880,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"U319": {
+		"from": "",
+		"to": 6,
+		"time": 2880,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"B449": {
+		"from": "",
+		"to": 7,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"N944": {
+		"from": "",
+		"to": 8,
+		"time": 1440,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"S199": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"A641": {
+		"from": "",
+		"to": 7,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"R051": {
+		"from": "",
+		"to": 8,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"V283": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"H121": {
+		"from": "",
+		"to": 1,
+		"time": 960,
+		"mass": 500000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"C125": {
+		"from": "",
+		"to": 2,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"O883": {
+		"from": "",
+		"to": 3,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"M609": {
+		"from": "",
+		"to": 4,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"L614": {
+		"from": "",
+		"to": 5,
+		"time": 1440,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"S804": {
+		"from": "",
+		"to": 6,
+		"time": 1440,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"N110": {
+		"from": "",
+		"to": 7,
+		"time": 1440,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"J244": {
+		"from": "",
+		"to": 8,
+		"time": 1440,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"Z060": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"Z647": {
+		"from": "",
+		"to": 1,
+		"time": 960,
+		"mass": 500000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"D382": {
+		"from": "",
+		"to": 2,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"O477": {
+		"from": "",
+		"to": 3,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"Y683": {
+		"from": "",
+		"to": 4,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"N062": {
+		"from": "",
+		"to": 5,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"R474": {
+		"from": "",
+		"to": 6,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"B274": {
+		"from": "",
+		"to": 7,
+		"time": 1440,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"A239": {
+		"from": "",
+		"to": 8,
+		"time": 1440,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"E545": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"V301": {
+		"from": "",
+		"to": 1,
+		"time": 960,
+		"mass": 500000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"I182": {
+		"from": "",
+		"to": 2,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"N968": {
+		"from": "",
+		"to": 3,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"T405": {
+		"from": "",
+		"to": 4,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"N770": {
+		"from": "",
+		"to": 5,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"A982": {
+		"from": "",
+		"to": 6,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"S047": {
+		"from": "",
+		"to": 7,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"U210": {
+		"from": "",
+		"to": 8,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"K346": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"P060": {
+		"from": "",
+		"to": 1,
+		"time": 960,
+		"mass": 500000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"N766": {
+		"from": "",
+		"to": 2,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"C247": {
+		"from": "",
+		"to": 3,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"X877": {
+		"from": "",
+		"to": 4,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"H900": {
+		"from": "",
+		"to": 5,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"U574": {
+		"from": "",
+		"to": 6,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"D845": {
+		"from": "",
+		"to": 7,
+		"time": 1440,
+		"mass": 5000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"N290": {
+		"from": "",
+		"to": 8,
+		"time": 1440,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"K329": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 5000000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"Y790": {
+		"from": "",
+		"to": 1,
+		"time": 960,
+		"mass": 500000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"D364": {
+		"from": "",
+		"to": 2,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"M267": {
+		"from": "",
+		"to": 3,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"E175": {
+		"from": "",
+		"to": 4,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"H296": {
+		"from": "",
+		"to": 5,
+		"time": 1440,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"V753": {
+		"from": "",
+		"to": 6,
+		"time": 1440,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"D792": {
+		"from": "",
+		"to": 7,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"C140": {
+		"from": "",
+		"to": 8,
+		"time": 1440,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"Z142": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"Q317": {
+		"from": "",
+		"to": 1,
+		"time": 960,
+		"mass": 500000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"G024": {
+		"from": "",
+		"to": 2,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"L477": {
+		"from": "",
+		"to": 3,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"Z457": {
+		"from": "",
+		"to": 4,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"V911": {
+		"from": "",
+		"to": 5,
+		"time": 1440,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"W237": {
+		"from": "",
+		"to": 6,
+		"time": 1440,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"B520": {
+		"from": "",
+		"to": 7,
+		"time": 2880,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"C391": {
+		"from": "",
+		"to": 8,
+		"time": 2880,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"C248": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 3300000000,
+		"regen": 0,
+		"jumpmass": 2000000000
+	},
+	"K162": {
+		"from": "",
+		"to": "",
+		"time": "",
+		"mass": "",
+		"regen": "",
+		"jumpmass": ""
+	},
+	"QA A": {
+		"from": "",
+		"to": 11,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"QA B": {
+		"from": "",
+		"to": 10,
+		"time": 1440,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"E004": {
+		"from": "",
+		"to": 1,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 3000000000,
+		"jumpmass": 5000000
+	},
+	"L005": {
+		"from": "",
+		"to": 2,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 3000000000,
+		"jumpmass": 5000000
+	},
+	"Z006": {
+		"from": "",
+		"to": 3,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 3000000000,
+		"jumpmass": 5000000
+	},
+	"M001": {
+		"from": "",
+		"to": 4,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 3000000000,
+		"jumpmass": 5000000
+	},
+	"C008": {
+		"from": "",
+		"to": 5,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 3000000000,
+		"jumpmass": 5000000
+	},
+	"G008": {
+		"from": "",
+		"to": 6,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 3000000000,
+		"jumpmass": 5000000
+	},
+	"Q003": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 3000000000,
+		"jumpmass": 5000000
+	},
+	"T458": {
+		"from": "",
+		"to": 12,
+		"time": 960,
+		"mass": 500000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"M164": {
+		"from": "",
+		"to": 12,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"L031": {
+		"from": "",
+		"to": 12,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"Q063": {
+		"from": "",
+		"to": 7,
+		"time": 960,
+		"mass": 500000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"V898": {
+		"from": "",
+		"to": 8,
+		"time": 960,
+		"mass": 2000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"E587": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 0,
+		"jumpmass": 1000000000
+	},
+	"F353": {
+		"from": "",
+		"to": 12,
+		"time": 960,
+		"mass": 100000000,
+		"regen": 0,
+		"jumpmass": 62000000
+	},
+	"F135": {
+		"from": "",
+		"to": 12,
+		"time": 960,
+		"mass": 750000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"A009": {
+		"from": "",
+		"to": 13,
+		"time": 960,
+		"mass": 3000000000,
+		"regen": 3000000000,
+		"jumpmass": 5000000
+	},
+	"S877": {
+		"from": "",
+		"to": 14,
+		"time": 960,
+		"mass": 750000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"B735": {
+		"from": "",
+		"to": 15,
+		"time": 960,
+		"mass": 750000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"V928": {
+		"from": "",
+		"to": 16,
+		"time": 960,
+		"mass": 750000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"C414": {
+		"from": "",
+		"to": 17,
+		"time": 960,
+		"mass": 750000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"R259": {
+		"from": "",
+		"to": 18,
+		"time": 960,
+		"mass": 750000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"C729": {
+		"from": "",
+		"to": 25,
+		"time": 720,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 410000000
+	},
+	"X450": {
+		"from": "",
+		"to": 9,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"R081": {
+		"from": "",
+		"to": 4,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"F216": {
+		"from": "",
+		"to": 25,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	},
+	"U372": {
+		"from": "",
+		"to": 25,
+		"time": 960,
+		"mass": 1000000000,
+		"regen": 0,
+		"jumpmass": 375000000
+	}}}};
+	// holeTypes = JSON.parse(holeTypes);

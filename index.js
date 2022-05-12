@@ -101,9 +101,9 @@ function rotateAnimation(id){
 }
 
 function createTab(name,id,i,code){
-	var org = document.querySelector("[buttonCharID='"+id+"']");//находим и удаляем кнопку перса
+	var org = document.querySelector("[buttonCharID='"+id+"']");//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if(org)document.getElementById("top_tr").removeChild(org);
-	var del = document.querySelector("[buttonCharID='"+id+"']");//находим и удаляем кнопку удаления перса
+	var del = document.querySelector("[buttonCharID='"+id+"']");//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if(del)document.getElementById("top_tr").removeChild(del);
 	
 	var t = document.getElementById("top_tr");
@@ -147,7 +147,7 @@ function createDelBut(x,id,charId,name,code){
 function createAddBut(name,id,unique){
 	var but = document.getElementById('addChar');
 	if(but)document.getElementById("top_tr").removeChild(but);
-	console.log("%c Creating Add Button tab for","background: #fff; color: orange");
+	// console.log("%c Creating Add Button tab for","background: #fff; color: orange");
 	var t = document.getElementById("top_tr");
 	var newTd = document.createElement('a');
 		newTd.id = id;
@@ -157,44 +157,7 @@ function createAddBut(name,id,unique){
 		t.appendChild(newTd);
 }
 // <!-- automatic resize window after loading from login -->
-function resizeMe(){
-	// var button = $("input[id^='noBorder']");
-	// button.onclick = function() {
-		// console.log("clicked");
-	// };
-	// var win = remote.getCurrentWindow();	
-	// if(currentVersion == "dev"){
-		// win.webContents.openDevTools();
-		// win.setSize(1000, 600);
-	// }else{
 
-	// // console.log(win);
-	
-		// getCookieJS('size', false, function(cok){
-			// if(cok.value){
-				// var val = JSON.parse(cok.value);
-				// // console.log(val.w);
-				// // console.log(val.h);
-				// if(val.w && val.h){
-					// // win.setSize(val.w, val.h);
-					// win.setSize(1000, 600);
-				// }else
-				// {
-					// win.setSize(1000, 600);
-				// }
-			
-			// }else{
-				// win.setSize(1000, 600);
-		// }
-		
-
-		// });
-	// }
-	// win.setMaximizable(true);
-	// win.setResizable(true);
-	// win.center(true);
-
-}
 function openUrl(){
 	$('addChar').on('click', 'a[href^="http"]', function(event) {
 	event.preventDefault();
@@ -212,7 +175,12 @@ function isWh(id){
 	if(!id)return;
 	// console.log(id);
 	var currentSys = fullmap[id];
-	if((currentSys["class5"]!="High")&&(currentSys["class5"]!="Low")&&(currentSys["class5"]!="Null")&&(currentSys["class5"]!="Abyss")){
+	if((currentSys["sysclass"]!="High")
+	&&(currentSys["sysclass"]!="Low")
+	&&(currentSys["sysclass"]!="Null")
+	&&(currentSys["sysclass"]!="Thera")
+	&&(currentSys["sysclass"]!="Abyss")
+	&&(currentSys["sysclass"]!="Pochven")){
 		return true;}
 	else {
 		return false;}

@@ -2,14 +2,14 @@
 <meta charset="windows-1251">
 <html ng-app="plunker" lang="en" style="background-color:#1A1A1A" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<link rel="icon" type="image/png" href="favicon.ico" />
+<link rel="icon" type="image/png" href="settings/favicon.ico" />
 <title>Hole Controller</title>
 <link type="text/css" href="css/login_page.css" rel="stylesheet" />
 <link type="text/css" href="css/main_left.css" rel="stylesheet" />
 <link type="text/css" href="css/main_top.css" rel="stylesheet" />
 <link type="text/css" href="css/main_right.css" rel="stylesheet" />
 <link type="text/css" href="css/tooltip_iFrame.css" rel="stylesheet" />
-<link type="text/css" href="css/tooltip_dataEffect.css" rel="stylesheet" /><!--  всплывающие подсказки с числом прыгов до хабов либо эффект и статики -->
+<link type="text/css" href="css/tooltip_dataEffect.css" rel="stylesheet" /><!--  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ -->
 <link type="text/css" href="css/tooltip_localsInfo.css" rel="stylesheet" />
 <link type="text/css" href="css/tooltip_pilotsInfo.css" rel="stylesheet" />
 <link type="text/css" href="css/tooltip_pilotPos.css" rel="stylesheet" />
@@ -17,9 +17,16 @@
 <link type="text/css" href="css/menu_edgeLabels.css" rel="stylesheet" />
 <link type="text/css" href="css/menu_kills.css" rel="stylesheet" />
 <link type="text/css" href="css/systempanel_tabs.css" rel="stylesheet" />
+
+<script language="javascript" type="text/javascript" src="settings/settings.js"></script>
 <!-- Insert this line above script imports  -->
 <script>
-var fullmap,constellations,systemJumps,regions,holeTypes,whSysInfo1,morphBusy
+var fullmap,
+// constellations,
+systemJumps,
+regions,
+// holeTypes,
+whSysInfo1,
 morphBusy = false;
 var _x;
 var _y;
@@ -36,93 +43,9 @@ var saved_options = {};
 const unique_state = 'firstlogin';
 <!-- var  saved_options.color_High = "#00CCFF"; -->
 const unique_code = Math.floor(Math.random() * 10000000);
-const scopes = 'esi-location.read_ship_type.v1'+
-			<!-- '%20esi-ui.write_waypoint.v1'+			 -->
-			<!-- '%20publicData'; -->
-			<!-- '%20characterLocationRead'+ -->
-			<!-- '%20characterNavigationWrite'+ -->
-			<!-- '%20characterBookmarksRead'+ -->
-			<!-- '%20corporationBookmarksRead'+ -->
-			<!-- '%20esi-assets.read_assets.v1'+ -->
-			<!-- '%20esi-skills.read_skills.v1'+ -->
-			<!-- '%20esi-skills.read_skillqueue.v1'+ -->
-			<!-- '%20esi-bookmarks.read_character_bookmarks.v1'+ -->
-			'%20esi-killmails.read_killmails.v1'+
-			'%20esi-fleets.read_fleet.v1'+
-			'%20esi-fleets.write_fleet.v1'+
-			<!-- '%20esi-ui.open_window.v1'+ -->
-			<!-- '%20esi-ui.write_waypoint.v1'; -->
-			<!-- '%20esi-fittings.read_fittings.v1'+  -->
-			<!-- '%20esi-characters.read_loyalty.v1'+ -->
-			'%20esi-location.read_online.v1'+
-			'%20esi-location.read_location.v1';
-			
-const TestScopes = 'esi-location.read_ship_type.v1'+
-			'%20esi-ui.write_waypoint.v1'+		
-			// <!-- '%20publicData'; -->
-			// <!-- '%20esi-skills.read_skills.v1'+ -->
-			// <!-- '%20esi-skills.read_skillqueue.v1'+ -->
-			'%20esi-bookmarks.read_character_bookmarks.v1'+
-			'%20esi-bookmarks.read_corporation_bookmarks.v1'+
-			'%20esi-killmails.read_killmails.v1'+
-			'%20esi-fleets.read_fleet.v1'+
-			'%20esi-fleets.write_fleet.v1'+
-			// <!-- '%20esi-ui.open_window.v1'+ -->
-			// <!-- '%20esi-fittings.read_fittings.v1'+  -->
-			// <!-- '%20esi-characters.read_loyalty.v1'+ -->
-			'%20esi-location.read_online.v1'+
-			'%20esi-location.read_location.v1';
-	
-if (typeof module === 'object') {window.module = module; module = undefined;}
-//var cVersion = {};
-//cVersion["dev"] = {};
-//cVersion["release"] = {};
-//var currentVersion = cVersion["dev"];
-<!-- var currentVersion = "dev"; -->
-var currentVersion = "dev";
-
-var Servers = {};
-Servers["amazon1"] = {
-	"client_id":"",
-	"login" : "login.",
-	"source" : "tranquility",
-	"serv" : "localhost",
-	"port" : "3000",
-	"token" : "stokens",
-	"scopes" : scopes
-};
-Servers["amazon2"] = {
-	"client_id":"",
-	"login" : "login.",
-	"source" : "tranquility",
-	"serv" : "",
-	"port" : "3000",
-	"token" : "stokens",
-	"scopes" : scopes
-};
-Servers["home"] = {
-	"client_id":"",
-	"login" : "login.",
-	"source" : "tranquility",
-	"serv" : "localhost",
-	"port" : "3000",
-	"token" : "stokens",
-	"scopes" : scopes
-};
-Servers["sisi"] = {
-	"client_id":"",
-	"login" : "sisilogin.test",
-	"source" : "singularity",
-	"serv" : "localhost",
-	"port" : "3000",
-	"token" : "ttokens",
-	"scopes" : TestScopes
-};
-
-const currentServer = Servers["amazon2"];	
 <!-- var currentServer = Servers["tranq"];	 -->
 <!-- console.log(currentServer); -->
-const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authorize/?response_type=code&redirect_uri=http://'+currentServer["serv"]+':3000&client_id='+currentServer["client_id"]+'&scope='+currentServer["scopes"]+'&state=';
+const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authorize/?response_type=code&redirect_uri=http://'+currentServer["serv"]+':'+currentServer["port"]+'&client_id='+currentServer["client_id"]+'&scope='+currentServer["scopes"]+'&state=';
 
 </script>
 
@@ -161,7 +84,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 <script language="javascript" type="text/javascript" src="db/mapofeden.js"  charset="windows-1251"></script>
 <script language="javascript" type="text/javascript" src="db/wh_holes.js"  charset="windows-1251"></script>
 <script language="javascript" type="text/javascript" src="db/wh_info.js"  charset="windows-1251"></script>
-<script language="javascript" type="text/javascript" src="db/constellations.js"  charset="windows-1251"></script>
+<!-- <script language="javascript" type="text/javascript" src="db/constellations.js"  charset="windows-1251"></script> -->
 <script language="javascript" type="text/javascript" src="db/regions.js"  charset="windows-1251"></script>
 <script language="javascript" type="text/javascript" src="db/jumps.js"  charset="windows-1251"></script>
 
@@ -178,7 +101,6 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 <script>if (window.module) module = window.module;</script>
 </head>
 
-<!-- <body onload="resizeMe();"> -->
 <body color_type='back' onload="setLoginButton();startApp(true);">
 <div id='loginPage' style='visibility:'>
 	<!-- <a id='login_but' target='_blank' style='visibility:hidden' href='https://sisilogin.testeveonline.com/oauth/authorize/?response_type=code&redirect_uri=http://localhost:8080&client_id=26463421869a4d34961b5f47a737da6b&scope=esi-location.read_location.v1%20esi-location.read_ship_type.v1&state=uniquestate123'>Login</a> -->
@@ -221,6 +143,8 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 <tr><td><input readonly id='color_C16' class="jscolor"/></td></tr>
 <tr><td><input readonly id='color_C17' class="jscolor"/></td></tr>
 <tr><td><input readonly id='color_Abyss' class="jscolor"/></td></tr>
+<tr><td><input readonly id='color_Thera' class="jscolor"/></td></tr>
+<tr><td><input readonly id='color_Pochven' class="jscolor"/></td></tr>
 <tr><td><button onclick='setColorDefault();'>Default</button></td></tr>
 
 </table></td><td>
@@ -248,6 +172,8 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 <tr><td>C16</td></tr>
 <tr><td>C17</td></tr>
 <tr><td>Abyss</td></tr>
+<tr><td>Thera</td></tr>
+<tr><td>Pochven</td></tr>
 <tr><td></td></tr>
 </table></td></tr>
 		<!-- <tr  ><td> -->
@@ -300,12 +226,12 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 	<table color_type='back'class='activeLeft' id='pilotPos'></table>
 	<div id='systemPanelID' class='activeLeft' style='display:none'>
 	<ul class="tabs">
-		<li><a id="tab-content1" onclick='reload();switchtab(0);' ><label for="tab1" id = "checkedyes">сигнатуры</label></a></li>
+		<li><a id="tab-content1" onclick='reload();switchtab(0);' ><label for="tab1" id = "checkedyes">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</label></a></li>
 		<!--<li><a id="tab-content3" onclick='resizeSigs();' ><label for="tab3" >D-scan</label></a></li>-->
-		<li><a id="tab-content4" onclick='switchtab(1);resUpdateButton();' ><label for="tab4" >Местные</label></a></li>
+		<li><a id="tab-content4" onclick='switchtab(1);resUpdateButton();' ><label for="tab4" >пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</label></a></li>
 		<!-- <li id="dest" ><a id="dest" onclick='javascript:setdest("php_system");' ><span class='checkbox' id='destcheck'><label id="setdest" ><img class="ImgSmall" src="img/destCreate.png" height="14" width="14" /img><span class='destinfo'>РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РѕР±С‰РёР№ РґРµСЃС‚</span></label></span></a></li> -->
 		<!-- <li id="dest" ><a id="dest" onclick='javascript:setdest("none");' ><span class='checkbox' id='destcheck'><label id="setdest"><img class="ImgSmall" src="img/destDelete.png" height="14" width="14" /img><span class='destinfo'>РЈРґР°Р»РёС‚СЊ РґРµСЃС‚</span></label></span></a></li> -->
-		<li><a id="tab-content5" onclick='switchtab(2);clear_area_content();' ><label for="tab5" >имя</label></a></li>
+		<li><a id="tab-content5" onclick='switchtab(2);clear_area_content();' ><label for="tab5" >пїЅпїЅпїЅ</label></a></li>
 	</ul>
 	<br>
 	<text id='hiddenSigC' style='display:none'>php_sig_post</text>
@@ -326,7 +252,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 
 		<span class='checkbox' >
 			<input type="checkbox" name='delsigs[]' id='checkbox_sigs' value='delete_sigs' />
-			<span class='checkboxinfo'>Удалить отсутствующие сиги</span>
+			<span class='checkboxinfo'>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</span>
 		</span>
 		<div class='submit_button'>
 			<input type='button' name='update_but' id='update_but' value='Update' onclick='updateButton()'/>
@@ -341,7 +267,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 
 
 
-			<tr><td><text cols='10'>Жители:</text></td><td>
+			<tr><td><text cols='10'>пїЅпїЅпїЅпїЅпїЅпїЅ:</text></td><td>
 			<div class="select-editable">
 			<!-- <select onchange="this.nextElementSibling.value=this.value"> -->
 			<select list='corpList' onchange="changeOption(this.value);" name='corpList' id='corpList' style='resize: none;color:#ffffff;background-color:#001F1F;' rows='2' cols='18' >
@@ -350,7 +276,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 			<input id='corpInput' type="text" name="format" value="" oninput='searchCorp(this);' style='resize: none;color:#ffffff;background-color:#001F1F;'/>
 			</div>
 			</td></tr>
-			<tr><td><text cols='10'>Прочее:</text></td><td><textarea id='resCommInput' style='resize: none;color:#ffffff;background-color:#001F1F;' rows='2' cols='21' >php_res_info</textarea></td></tr>
+			<tr><td><text cols='10'>пїЅпїЅпїЅпїЅпїЅпїЅ:</text></td><td><textarea id='resCommInput' style='resize: none;color:#ffffff;background-color:#001F1F;' rows='2' cols='21' >php_res_info</textarea></td></tr>
 		</table>
 		<!--<text>php //echo $res_post;</text>-->
 		<text id='sigs' style='text-align:center;'>
@@ -383,7 +309,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 			<a id="restorer" target="mapparser"  onclick='rotateAnimation("restoreImg");restoreLast();'>
 				<img class="rightImg" id="restoreImg" src="img/restoreBut.png" height="32" width="32" />
 			</a>
-			<span class='rightTooltipInfo' id='restorerTool'>Восстановить последнюю удаленную свзязь</span>
+			<span class='rightTooltipInfo' id='restorerTool'>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</span>
 		</span>
 	</div>
 	<div class='right_button_group' id="remap_but" style='top: 30px'>
@@ -391,7 +317,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 			<a id="remaper" target="mapparser"  onclick='rotateAnimation("remapImg");socket.emit("map_redraw", activeCharTab);'>
 				<img class="rightImg" id="remapImg" src="img/refresh_but.png" height="32" width="32" />
 			</a>
-			<span class='rightTooltipInfo' id='restorerTool'>Перерисовать</span>
+			<span class='rightTooltipInfo' id='restorerTool'>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>
 		</span>
 	</div>
 	<div class='right_button_group' id="expand_button" style='top: 50%;right:0px'>
@@ -399,7 +325,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 			<a id="remaper" target="mapparser"  onclick='openOptPanel();'>
 				<img class="rightImg" id="remapImg" src="img/Safety_Selection.png" height="24" width="16" />
 			</a>
-			<span class='rightTooltipInfo' id='restorerTool'>Опции</span>
+			<span class='rightTooltipInfo' id='restorerTool'>пїЅпїЅпїЅпїЅпїЅ</span>
 		</span>
 	</div>
 </div>

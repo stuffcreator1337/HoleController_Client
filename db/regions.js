@@ -292,5 +292,26 @@ function regions1(data){return [{"regions" : {
 			},
 "11000031" : { 	"regionName" : "G-R00031",
 					"factionID" : ""
+			},
+"11000032" : { 	"regionName" : "H-R00032",
+					"factionID" : ""
+			},
+"11000033" : { 	"regionName" : "K-R00033",
+					"factionID" : ""
+			},
+"12000001" : { 	"regionName" : "ADR01",
+					"factionID" : ""
+			},
+"12000002" : { 	"regionName" : "ADR02",
+					"factionID" : ""
+			},
+"12000003" : { 	"regionName" : "ADR03",
+					"factionID" : ""
+			},
+"12000004" : { 	"regionName" : "ADR04",
+					"factionID" : ""
+			},
+"12000005" : { 	"regionName" : "ADR05",
+					"factionID" : ""
 }}}]};
 			// regions = JSON.parse(regions);
