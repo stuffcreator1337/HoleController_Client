@@ -36,15 +36,15 @@ function isExtra(e) {
   _y = e.clientY;
   return bSame;
   }
-<!-- require('electron').remote.getCurrentWindow().webContents.openDevTools(); -->
+// <!-- require('electron').remote.getCurrentWindow().webContents.openDevTools(); -->
 
 var activeCharTab;
 var saved_options = {};
 const unique_state = 'firstlogin';
-<!-- var  saved_options.color_High = "#00CCFF"; -->
+// <!-- var  saved_options.color_High = "#00CCFF"; -->
 const unique_code = Math.floor(Math.random() * 10000000);
-<!-- var currentServer = Servers["tranq"];	 -->
-<!-- console.log(currentServer); -->
+// <!-- var currentServer = Servers["tranq"];	 -->
+// <!-- console.log(currentServer); -->
 const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authorize/?response_type=code&redirect_uri=http://'+currentServer["serv"]+':'+currentServer["port"]+'&client_id='+currentServer["client_id"]+'&scope='+currentServer["scopes"]+'&state=';
 
 </script>
@@ -90,6 +90,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 
 <script language="javascript" type="text/javascript" src="js/updatePage.js"  charset="windows-1251"></script>
 <script language="javascript" type="text/javascript" src="js/parse_wspace.js"  charset="windows-1251"></script>
+<script language="javascript" type="text/javascript" src="js/parser_dest.js"  charset="windows-1251"></script>
 <!-- whinfo-tooltip scripts -->
 <script language="javascript" type="text/javascript" src="js/wh_effect_constructor.js"  charset="windows-1251"></script>
 <script language="javascript" type="text/javascript" src="js/wh_holes_constructor.js"  charset="windows-1251"></script>
