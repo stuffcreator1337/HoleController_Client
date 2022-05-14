@@ -16,15 +16,15 @@ socket.on('sending_names', function(data){
 		// console.log(data[0].names);
 		var names = data[0].names;
 		for(var i=0;i<names.length;i++){	
-			if(document.getElementById(names[i].id)){document.getElementById(names[i].id).children[0].children[11].value = names[i].name;
-			document.getElementById(names[i].id).children[0].children[11].innerHTML = names[i].name;}
+			if(document.getElementById(names[i].id)){document.getElementById(names[i].id).children[0].children["sys_custom_name"].value = names[i].name;
+			document.getElementById(names[i].id).children[0].children["sys_custom_name"].innerHTML = names[i].name;}
 		}
 	};
 });
 
 function openSysTable(id,name,color,display,sigs){
 	// var sigpage = document.getElementById("sigspanel");
-	// console.log(sigpage);
+	console.log(id);
 	// console.log(sigpage.contentDocument );
 	document.querySelector("#hiddenSigs").innerHTML = JSON.stringify(sigs);
 	// console.log(document.querySelector("#hiddenSigs").innerHTML);
@@ -38,6 +38,10 @@ function openSysTable(id,name,color,display,sigs){
 	document.getElementById("hiddenSyst").innerHTML = name;
 	document.getElementById("php_system").style.color = "#"+color;
 	document.getElementById("php_system2").style.color = "#"+color;
+	
+	var syscont = document.getElementById(id);
+	var text = syscont.children[0].children["sys_custom_name"].textContent;
+	document.getElementById('system_name').value = text;
 }
 function insertSigs(sigs){
 
@@ -341,8 +345,11 @@ function residents(){
 	
 }
 function clear_area_content(){
-	// console.log(document.getElementById('system_name'));
-	document.getElementById('system_name').value = '';
+	// console.log(document.getElementById('hiddenSyID'));
+	// console.log(document.getElementById('hiddenSyID').textContent);
+	var syscont = document.getElementById(document.getElementById('hiddenSyID').textContent);
+	var text = syscont.children[0].children["sys_custom_name"].textContent;
+	document.getElementById('system_name').value = text;
 }
 function sendSysName(that){
 	// console.log(that);
@@ -350,12 +357,15 @@ function sendSysName(that){
 	// console.log(document.getElementById('system_name'));
 	// console.log(document.getElementById('system_name').value);
 	var sysname = document.getElementById('system_name').value;
-	if(sysname != ''){
-		document.getElementById(document.getElementById("hiddenSyID").innerHTML).children[0].children[11].value = sysname;
-		document.getElementById(document.getElementById("hiddenSyID").innerHTML).children[0].children[11].innerHTML = sysname;
-		console.log(document.getElementById(document.getElementById("hiddenSyID").innerHTML).children[0].children[11].value);
-		socket.emit('sysname_from_client', {"user":activeCharTab, "id": 	document.getElementById("hiddenSyID").innerHTML, "system":	document.getElementById("hiddenSyst").innerHTML, "name":sysname});		
-	}
+	// if(sysname != ''){
+		var sysid = document.getElementById("hiddenSyID").innerHTML;
+		// console.log(document.getElementById(sysid).children[0].children);
+		document.getElementById(sysid).children[0].children["sys_custom_name"].value = sysname;
+		document.getElementById(sysid).children[0].children["sys_custom_name"].innerHTML = sysname;
+		// console.log(document.getElementById(sysid).children[0].children["sys_custom_name"].value);
+		socket.emit('sysname_from_client', {"user":activeCharTab, "id": 	sysid, "system":	document.getElementById("hiddenSyst").innerHTML, "name":sysname});		
+	// }
+	clear_area_content();
 }
 function resUpdateButton(){
 	// var body = parent.linkedit.contentDocument.body;

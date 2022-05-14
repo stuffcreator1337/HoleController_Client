@@ -4409,6 +4409,12 @@ $jit.Graph = new Class({
 		}
 	},
 	setHoleNames: function(g,names){
+    for(var i=0;i<names.length;i++){
+      if(names[i].id == homesystemID){
+        document.getElementById(homesystemID).children[0].children["sys_custom_name"].value = names[i].name;
+		    document.getElementById(homesystemID).children[0].children["sys_custom_name"].innerHTML = names[i].name;
+      }
+    }
 		g.graph.eachNode(function(node){
 			if(names){
 				for(var i=0;i<names.length;i++){

@@ -135,9 +135,7 @@ height: 21px;
 div.nodeDiv_true span#eff {   
 	font-size: 1em;	
 	margin-left: -999em;
-	border: 1px solid #FFAD33;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;		
+	border: 1px solid #FFAD33;	
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 	-webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
 	-moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
@@ -198,7 +196,7 @@ div.nodeDiv_false #eff:hover  {
 #char {
 	background:#ff1aff;
 }
-#eff:hover {}
+/* #eff:hover {} */
 div.nodeDiv_true span#char {}
 
 div.nodeDiv_true span#char:hover ~ span.pilots_Info {
@@ -261,10 +259,10 @@ div.nodeDiv_false span.pilots_Info:hover {
 }
 /***************************************************** sys_custom_name *****************************************************/
 span.sys_custom_name {
-text-transform: uppercase;	
-display: inline-block;
+/* text-transform: uppercase;	 */
+display: block;
 margin-left: 0px;
-	text-align: right;
+	text-align: left;
 	padding: 0.1em 0.1em;   
 	/* color: #ff1aff;  */
 	color: #0099ff; 
@@ -283,10 +281,14 @@ margin-left: 0px;
 	background: -ms-linear-gradient(top,#262626 0%,#1A1A1A 100%);
 	background: linear-gradient(top,#262626 0%,#1A1A1A 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#262626',endColorstr='#1A1A1A',GradientType=0); */
-	position: absolute; right: 3px; top: 18px; z-index: 85;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	position: relative; 
+	/* left: 3px; top: 18px; z-index: 85; */
 
 
-	width: 140px;
+	width: 100px;
 }
 .sys_custom_name:hover {
 	/* margin-left: 0; */

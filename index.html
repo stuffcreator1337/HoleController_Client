@@ -232,7 +232,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 				<li><a id="tab-content4" onclick='switchtab(1);resUpdateButton();' ><label for="tab4" >Locals</label></a></li>
 				<!-- <li id="dest" ><a id="dest" onclick='javascript:setdest("php_system");' ><span class='checkbox' id='destcheck'><label id="setdest" ><img class="ImgSmall" src="img/destCreate.png" height="14" width="14" /img><span class='destinfo'>Установить общий дест</span></label></span></a></li> -->
 				<!-- <li id="dest" ><a id="dest" onclick='javascript:setdest("none");' ><span class='checkbox' id='destcheck'><label id="setdest"><img class="ImgSmall" src="img/destDelete.png" height="14" width="14" /img><span class='destinfo'>Удалить дест</span></label></span></a></li> -->
-				<li><a id="tab-content5" onclick='switchtab(2);clear_area_content();' ><label for="tab5" >name</label></a></li>
+				<li><a id="tab-content5" onclick='switchtab(2);clear_area_content();' ><label for="tab5" >annotation</label></a></li>
 			</ul>
 			<br>
 			<text id='hiddenSigC' style='display:none'>php_sig_post</text>
@@ -292,7 +292,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 				<table>
 				<tr><td><textarea id='system_name' style='resize: none;color:#ffffff;background-color:#001F1F;' rows='2' cols='21' ></textarea></td></tr>
 				<tr><td><a id='php_system2'  href='#' ></a></td></tr>
-				<tr><td><input class='submit_button' type='button' name='button' id='button' value='Update' onclick='sendSysName(this);clear_area_content();'/></td></tr>
+				<tr><td><input class='submit_button' type='button' name='button' id='button' value='Update' onclick='sendSysName(this);'/></td></tr>
 				</table>
 			</form>
 			

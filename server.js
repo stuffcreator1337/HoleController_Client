@@ -183,7 +183,7 @@ socket.on('privat_char_update', function(data){
 	}
 });
 socket.on('map_connections', function(data){
-	// console.log(data);
+	// console.log(data[0].custom_sys_names);
 	cookie = cookie.replace(/"/g,'');
 	// console.log(cookie);
 	if(data[1].replace(/"/g,'') == cookie){

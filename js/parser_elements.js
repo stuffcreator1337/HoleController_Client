@@ -7,7 +7,7 @@ function clone(obj) {
     return copy;
 }
 function nodeStyleDetails(nodeDiv,node,nodeInnerName){
-	// console.log(node);
+	// console.log(node.data.custom_name);
 	var elements = {};
 	let charPNG = "<img src='img/Character.png' height='12' width='12'</img>";
 	let infoPNG = "<img src='img/icon_info.png'</img>";
