@@ -202,14 +202,14 @@ function check(that){
 
 function openOptPanel(){
 	console.log("%c Opening options","background: #fff; color: orange");
-	var rightPanel = document.getElementById("right_panel");
+	var rightPaneltable = document.getElementById("right_panel");
 	var expandButton = document.getElementById("expand_button");
-	if(rightPanel.style.width == "150px"){
-		rightPanel.style.width = "0px";
+	if(rightPaneltable.style.display == "table"){
+		rightPaneltable.style.display = "none";
 		expandButton.style.right = "0px";
 	}
 	else{
-		rightPanel.style.width = "150px";
+		rightPaneltable.style.display = "table";
 		expandButton.style.right = "150px";
 	}
 				

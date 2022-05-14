@@ -101,9 +101,9 @@ function rotateAnimation(id){
 }
 
 function createTab(name,id,i,code){
-	var org = document.querySelector("[buttonCharID='"+id+"']");//������� � ������� ������ �����
+	var org = document.querySelector("[buttonCharID='"+id+"']");//find and delete char button
 	if(org)document.getElementById("top_tr").removeChild(org);
-	var del = document.querySelector("[buttonCharID='"+id+"']");//������� � ������� ������ �������� �����
+	var del = document.querySelector("[buttonCharID='"+id+"']");//find and delete char deletion button
 	if(del)document.getElementById("top_tr").removeChild(del);
 	
 	var t = document.getElementById("top_tr");
