@@ -161,5 +161,5 @@ div[style="visibility:hidden"]{
 	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#595959),color-stop(100%,#333333));	
 }
 #remapTool.rightTooltipInfo,#restorerTool.rightTooltipInfo{
-	position: absolute; right: 40px; z-index: 99;
+	position: absolute; right: 40px; z-index: 102;
 }
