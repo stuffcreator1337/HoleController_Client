@@ -4222,7 +4222,7 @@ $jit.Graph = new Class({
 			nodeInnerName = "("+staticsContainer+")";
 		} 
 		var opt_Compact = document.getElementById("opt_compact").checked;
-		var nodeDiv = new Span('div',opt_Compact?'nodeDiv_true':'nodeDiv_false','','','');
+		var nodeDiv = new Span('div',opt_Compact?'nodeDiv_true':'nodeDiv_false','nodeDivID','','');
 			nodeDiv.setAttribute('color_type','fr1');
 			domElement.appendChild(nodeDiv);
 

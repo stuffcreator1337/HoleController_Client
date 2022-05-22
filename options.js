@@ -151,7 +151,7 @@ function setColorDefault(){
 	setJsColor("color_C15","#999966");opt_setNewColor(document.getElementById("color_C15"),"#999966")
 	setJsColor("color_C16","#999966");opt_setNewColor(document.getElementById("color_C16"),"#999966")
 	setJsColor("color_C17","#999966");opt_setNewColor(document.getElementById("color_C17"),"#999966")
-	setJsColor("color_Abyss","#999966");	opt_setNewColor(document.getElementById("color_Abyss"),"#996633")
+	setJsColor("color_Abyss","#996633");	opt_setNewColor(document.getElementById("color_Abyss"),"#996633")
 	setJsColor("color_Thera","#660033");	opt_setNewColor(document.getElementById("color_Thera"),"#660033")
 	setJsColor("color_Pochven","#660000");	opt_setNewColor(document.getElementById("color_Pochven"),"#660000")
 }

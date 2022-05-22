@@ -16,8 +16,11 @@ socket.on('sending_names', function(data){
 		// console.log(data[0].names);
 		var names = data[0].names;
 		for(var i=0;i<names.length;i++){	
-			if(document.getElementById(names[i].id)){document.getElementById(names[i].id).children[0].children["sys_custom_name"].value = names[i].name;
-			document.getElementById(names[i].id).children[0].children["sys_custom_name"].innerHTML = names[i].name;}
+			if(document.getElementById(names[i].id)){				
+				// console.log(document.getElementById(names[i].id).children);
+				document.getElementById(names[i].id).children["nodeDivID"].children["sys_custom_name"].value = names[i].name;
+				document.getElementById(names[i].id).children["nodeDivID"].children["sys_custom_name"].innerHTML = names[i].name;
+			}
 		}
 	};
 });
@@ -40,7 +43,7 @@ function openSysTable(id,name,color,display,sigs){
 	document.getElementById("php_system2").style.color = "#"+color;
 	
 	var syscont = document.getElementById(id);
-	var text = syscont.children[0].children["sys_custom_name"].textContent;
+	var text = syscont.children["nodeDivID"].children["sys_custom_name"].textContent;
 	document.getElementById('system_name').value = text;
 }
 function insertSigs(sigs){
@@ -131,6 +134,7 @@ var td2 = newObj('td');
 tr.appendChild(td2);
 var tdate = newObj('td');
 	tdate.className = 'tableSigCl';
+	tdate.id = 'tableSigTimeAgo';
 	// console.log(new Date().getTime(),data.time);
 	var ti = new Date().getTime()-data.time;
 	// console.log(ti);
@@ -138,6 +142,7 @@ var tdate = newObj('td');
 	tr.appendChild(tdate);	
 var Hdate = newObj('td');
 	Hdate.className = 'tableSigCl';
+	Hdate.id = 'tableSigTimeOpen';
 	// console.log(data);
 	Hdate.innerHTML = data.time;
 	Hdate.style.display = 'none';
@@ -256,15 +261,15 @@ function updateButton(){
 			}
 			//если сига есть -
 			else{//- смотрим определен ли класс во вставл¤емых
-				trsig.children[3].innerHTML = new Date().getTime();//обновляем время у уже имеющейся сигнатуры
-				trsig.children[2].innerHTML = msToTime(0,'min')+" ago";//обновляем время у уже имеющейся сигнатуры
+				trsig.children["tableSigTimeOpen"].innerHTML = new Date().getTime();//обновляем время у уже имеющейся сигнатуры
+				trsig.children["tableSigTimeAgo"].innerHTML = msToTime(0,'min')+" ago";//обновляем время у уже имеющейся сигнатуры
 				if(new_out[i].substr(7,1) != "C"){//если во вставл¤емых класс определен - вносим его
-					trsig.children[1].innerHTML = defineSigType(new_out[i].substr(7,1));//выставл¤ем класс, второй столбец
+					trsig.children["tableSigType"].innerHTML = defineSigType(new_out[i].substr(7,1));//выставл¤ем класс, второй столбец
 					newsigs = newsigs+new_out[i];//вносим в список отправл¤емых новых сиг
 					replaceSig = replaceSig+new_out[i];//вносим в список отправл¤емых новых сиг
 				}else{
 					// console.log(trsig.children);
-				replaceSig = replaceSig + trsig.children[0].innerHTML+defineShortType(trsig.children[1].innerHTML)+'s1';
+				replaceSig = replaceSig + trsig.children[sigshort].innerHTML+defineShortType(trsig.children["tableSigType"].innerHTML)+'s1';
 				}
 				
 				if(checkbox.checked){
@@ -308,14 +313,13 @@ function sendToFile(table){
 	var sigToSend2 = {};
 	// var k=0;
 	for(var i=0; i < table.children.length; i++){
-		// console.log(table.children[i],'background:black;color:white');
+		// console.log(table.children[i].children,'background:black;color:white');
 		if(table.children[i].style.color != "rgb(255, 0, 0)"){
 		// console.log('%c RED','background:red;color:black');
-			// console.log(table.children[i].children[0].children[0].style.color);
 			// console.log(table.children[i]);
 			var sigId = table.children[i].children[0].innerHTML;
-			var sigTy = table.children[i].children[1].innerHTML;
-			var time = table.children[i].children[3].innerHTML;
+			var sigTy = table.children[i].children["tableSigType"].innerHTML;
+			var time = table.children[i].children["tableSigTimeOpen"].innerHTML;
 			
 			//вставить проверку на integer, иначе - вставлять новое время, проверить может быть для всех сиг всегда слать новое время
 			if(sigId != ''){
@@ -348,7 +352,7 @@ function clear_area_content(){
 	// console.log(document.getElementById('hiddenSyID'));
 	// console.log(document.getElementById('hiddenSyID').textContent);
 	var syscont = document.getElementById(document.getElementById('hiddenSyID').textContent);
-	var text = syscont.children[0].children["sys_custom_name"].textContent;
+	var text = syscont.children["nodeDivID"].children["sys_custom_name"].textContent;
 	document.getElementById('system_name').value = text;
 }
 function sendSysName(that){
@@ -358,12 +362,11 @@ function sendSysName(that){
 	// console.log(document.getElementById('system_name').value);
 	var sysname = document.getElementById('system_name').value;
 	// if(sysname != ''){
-		var sysid = document.getElementById("hiddenSyID").innerHTML;
-		// console.log(document.getElementById(sysid).children[0].children);
-		document.getElementById(sysid).children[0].children["sys_custom_name"].value = sysname;
-		document.getElementById(sysid).children[0].children["sys_custom_name"].innerHTML = sysname;
-		// console.log(document.getElementById(sysid).children[0].children["sys_custom_name"].value);
-		socket.emit('sysname_from_client', {"user":activeCharTab, "id": 	sysid, "system":	document.getElementById("hiddenSyst").innerHTML, "name":sysname});		
+	var sysid = document.getElementById("hiddenSyID").innerHTML;
+	// console.log(document.getElementById(sysid).children);
+	document.getElementById(sysid).children["nodeDivID"].children["sys_custom_name"].value = sysname;
+	document.getElementById(sysid).children["nodeDivID"].children["sys_custom_name"].innerHTML = sysname;
+	socket.emit('sysname_from_client', {"user":activeCharTab, "id": 	sysid, "system":	document.getElementById("hiddenSyst").innerHTML, "name":sysname});		
 	// }
 	clear_area_content();
 }
