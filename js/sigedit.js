@@ -181,46 +181,46 @@ function updateButton(){
 	// console.log(oldSigs);
 	var systID = document.querySelector("#hiddenSyID").innerHTML;
 	var syst = document.querySelector("#hiddenSyst").innerHTML;
-	//первична¤ проверка на корректность инфы
+	//первичная проверка на корректность инфы
 	if(input.value ==''){
 		socket.emit('sigs_request', {'user':activeCharTab, 'id':systID, 'name':syst, 'color':document.querySelector("#hiddenSyst").style.color});
 		return;}
 	//замена по шаблону
 	var output = input.value.replace(/\s+Cosmic Signature\s+Wormhole.+AU/g, "Ws1");   //удаляем wh au
 	var output = output.replace(/\s+Cosmic Signature\s+Wormhole.+m/g, "Ws1");   		//удаляем wh m & km
-	var output = output.replace(/\s+Источники сигналов\s+Червоточина.+а.е./g, "Ws1"); //удаляем âõ àå
-	var output = output.replace(/\s+Источники сигналов\s+Червоточина.+м/g, "Ws1");   	//удаляем âõ ì è êì
+	var output = output.replace(/\s+Источники сигналов\s+Червоточина.+а.е./g, "Ws1"); //удаляем вх ае 
+	var output = output.replace(/\s+Источники сигналов\s+Червоточина.+м/g, "Ws1");   	//удаляем вх м и км
 
 	var output = output.replace(/\s+Cosmic Signature\s+Gas Site.+AU/g, "Gs1");	//удаляем gas au
 	var output = output.replace(/\s+Cosmic Signature\s+Gas Site.+m/g, "Gs1");		//удаляем gas m & km
-	var output = output.replace(/\s+Источники сигналов\s+ГАЗ.+а.е./g, "Gs1");		//удаляем ãàç àå
-	var output = output.replace(/\s+Источники сигналов\s+ГАЗ.+м/g, "Gs1");		//удаляем ãàç ì è êì
+	var output = output.replace(/\s+Источники сигналов\s+ГАЗ.+а.е./g, "Gs1");		//удаляем газ ае
+	var output = output.replace(/\s+Источники сигналов\s+ГАЗ.+м/g, "Gs1");		//удаляем газ м и км
 
 	var output = output.replace(/\s+Cosmic Signature\s+Data Site.+AU/g, "Ds1");	//удаляем Data au
 	var output = output.replace(/\s+Cosmic Signature\s+Data Site.+m/g, "Ds1");	//удаляем Data m & km
-	var output = output.replace(/\s+Источники сигналов\s+ДАННЫЕ.+а.е./g, "Ds1");	//удаляем ÄÀÍÍÛÅ àå
-	var output = output.replace(/\s+Источники сигналов\s+ДАННЫЕ.+м/g, "Ds1");		//удаляем ÄÀÍÍÛÅ ì è êì
+	var output = output.replace(/\s+Источники сигналов\s+ДАННЫЕ.+а.е./g, "Ds1");	//удаляем ДАННЫЕ ае
+	var output = output.replace(/\s+Источники сигналов\s+ДАННЫЕ.+м/g, "Ds1");		//удаляем ДАННЫЕ м и км
 
 	var output = output.replace(/\s+Cosmic Signature\s+Relic Site.+AU/g, "Rs1");	//удаляем gas au
 	var output = output.replace(/\s+Cosmic Signature\s+Relic Site.+m/g, "Rs1");	//удаляем gas m & km
-	var output = output.replace(/\s+Источники сигналов\s+АРТЕФАКТЫ.+а.е./g, "Rs1");	//удаляем ãàç àå
-	var output = output.replace(/\s+Источники сигналов\s+АРТЕФАКТЫ.+м/g, "Rs1");	//удаляем ãàç ì è êì
+	var output = output.replace(/\s+Источники сигналов\s+АРТЕФАКТЫ.+а.е./g, "Rs1");	//удаляем газ ае
+	var output = output.replace(/\s+Источники сигналов\s+АРТЕФАКТЫ.+м/g, "Rs1");	//удаляем газ м и км
 
 	var output = output.replace(/\s+Cosmic Signature\s+.+AU/g, "Cs1");	//удаляем gas au
 	var output = output.replace(/\s+Cosmic Signature\s+.+m/g, "Cs1");	//удаляем gas m & km
-	var output = output.replace(/\s+Источники сигналов\s+.+а.е./g, "Cs1");	//удаляем ãàç àå
-	var output = output.replace(/\s+Источники сигналов\s+.+м/g, "Cs1");	//удаляем ãàç ì è êì'Ws1');
+	var output = output.replace(/\s+Источники сигналов\s+.+а.е./g, "Cs1");	//удаляем газ ае
+	var output = output.replace(/\s+Источники сигналов\s+.+м/g, "Cs1");	//удаляем газ м и км'Ws1');
 
 	var output = output.replace(/\s+Cosmic Anomaly\s+.+AU/g, "As1");   //удаляем wh au
 	var output = output.replace(/\s+Cosmic Anomaly\s+.+m/g, "As1");   //удаляем wh au
 	//var output = input.value.replace(pattern,replace);
 
-	//провер¤ем на корректность инфы
+	//проверяем на корректность инфы
 	if (output.indexOf("s1")==-1){console.log("no sigs");return;}
 	var output_count = output.match(/.{1,10}/g);
 	var output_countlength = output_count.length;
 	if(output_count[output_countlength-1].length != 10){output = ''; input.value='';return;}
-	//раздел¤ем сиги поштучно
+	//разделяем сиги поштучно
 	var output_splitted = output.split(/\s/);
 
 	var new_out = [];
@@ -260,13 +260,13 @@ function updateButton(){
 				delSigs = checkForDel(sigshort,delSigs);
 			}
 			//если сига есть -
-			else{//- смотрим определен ли класс во вставл¤емых
+			else{//- смотрим определен ли класс во вставляемых
 				trsig.children["tableSigTimeOpen"].innerHTML = new Date().getTime();//обновляем время у уже имеющейся сигнатуры
 				trsig.children["tableSigTimeAgo"].innerHTML = msToTime(0,'min')+" ago";//обновляем время у уже имеющейся сигнатуры
-				if(new_out[i].substr(7,1) != "C"){//если во вставл¤емых класс определен - вносим его
-					trsig.children["tableSigType"].innerHTML = defineSigType(new_out[i].substr(7,1));//выставл¤ем класс, второй столбец
-					newsigs = newsigs+new_out[i];//вносим в список отправл¤емых новых сиг
-					replaceSig = replaceSig+new_out[i];//вносим в список отправл¤емых новых сиг
+				if(new_out[i].substr(7,1) != "C"){//если во вставляемых класс определен - вносим его
+					trsig.children["tableSigType"].innerHTML = defineSigType(new_out[i].substr(7,1));//выставляем класс, второй столбец
+					newsigs = newsigs+new_out[i];//вносим в список отправляемых новых сиг
+					replaceSig = replaceSig+new_out[i];//вносим в список отправляемых новых сиг
 				}else{
 					// console.log(trsig.children);
 				replaceSig = replaceSig + trsig.children[sigshort].innerHTML+defineShortType(trsig.children["tableSigType"].innerHTML)+'s1';
