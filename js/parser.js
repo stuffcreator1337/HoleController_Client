@@ -77,10 +77,10 @@ function init(json,localsjs,json2,task,custom_sys_names) {
                 lineWidth: 3.0
             },	
             Events: {
-            enable: true,
-            type: 'Native',
-            //Change cursor style when hovering a node
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                enable: true,
+                type: 'Native',
+                //Change cursor style when hovering a node
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 onMouseEnter: function(eventInfo) {
                 // console.log(morphBusy);
                 // console.log(st.busy);
@@ -104,7 +104,51 @@ function init(json,localsjs,json2,task,custom_sys_names) {
                     st.canvas.getElement().style.cursor = '';	
                     st.graph.restoreOrgInfo(eventInfo.data);
                     st.fx.animate({modes: ['node-style:shadowBlur'], duration: 2000 });	
-                }
+                },                
+                onDragMove: function(node, eventInfo, e){  
+                    console.log("onDragMove");
+                    var pos = eventInfo.getPos();  
+                    node.pos.setc(pos.x, pos.y);  
+                    st.fx.plot();
+                },  
+                onDragEnd: function(node, eventInfo, e){  
+                    console.log("onDragEnd");
+                    st.compute('end');  
+                    st.fx.animate( {  
+                    modes: [  
+                      'linear'  
+                    ],  
+                    duration: 700,  
+                    transition: $jit.Trans.Elastic.easeOut  
+                  });  
+                },  
+                //touch events  
+                onTouchStart: function(node, eventInfo, e) {  
+                    console.log("onTouchStart");
+                  //stop the default event  
+                  $jit.util.event.stop(e);  
+                },  
+                onTouchMove: function(node, eventInfo, e){  
+                    console.log("onTouchMove");
+                  //stop the default event  
+                  $jit.util.event.stop(e);  
+                  var pos = eventInfo.getPos();  
+                  node.pos.setc(pos.x, pos.y);  
+                  st.fx.plot();  
+                },  
+                onTouchEnd: function(node, eventInfo, e){  
+                    console.log("onTouchEnd");
+                  //stop the default event  
+                  $jit.util.event.stop(e);  
+                  st.compute('end');  
+                  st.fx.animate( {  
+                    modes: [  
+                      'linear'  
+                    ],  
+                    duration: 700,  
+                    transition: $jit.Trans.Elastic.easeOut  
+                  });  
+                } 
             },
             
             onBeforeCompute: function(node){
