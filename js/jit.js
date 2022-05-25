@@ -1158,6 +1158,7 @@ Options.Node = {
   
   overridable: false,
   type: 'circle',
+  // type: 'rectangle',
   color: '#ccb',
   alpha: 1,
   dim: 3,
@@ -1675,6 +1676,8 @@ Options.Events = {
   enable: false,
   enableForEdges: true,
   type: 'auto',
+  nodeClickedX: 0,
+  nodeClickedY: 0,
   onClick: $.empty,
   onRightClick: $.empty,
   onMouseMove: $.empty,
@@ -2130,7 +2133,6 @@ Extras.Classes.Events = new Class({
 		// console.log(document.cookie);
 	if(morphBusy)return;
 	  // console.log('MAIN TEST');
-	// console.log("onMouseUp");
     var evt = $.event.get(e, win);
     if(!this.moved) 
 	{
@@ -2352,13 +2354,13 @@ Extras.Classes.Events = new Class({
 	if(morphBusy)return;
    var label, evt = $.event.get(e, win);
    if(this.pressed) {
-	if(isExtra(e))return;
+	  if(isExtra(e))return;
      this.moved = true;
      this.config.onDragMove(this.pressed, event, evt);
      return;
    }
    if(this.dom) {
-     this.config.onMouseMove(this.hovered,
+      this.config.onMouseMove(this.hovered,
          event, evt);
    } else {
      if(this.hovered) {
@@ -2374,10 +2376,10 @@ Extras.Classes.Events = new Class({
          this.hovered = false;
        }
      }
-     if(this.hovered = (event.getNode() || (this.config.enableForEdges && event.getEdge()))) {
-       this.config.onMouseEnter(this.hovered, event, evt);
+    if(this.hovered = (event.getNode() || (this.config.enableForEdges && event.getEdge()))) {
+        this.config.onMouseEnter(this.hovered, event, evt);
      } else {
-       this.config.onMouseMove(false, event, evt);
+        this.config.onMouseMove(false, event, evt);
      }
    }
   },
@@ -2395,7 +2397,7 @@ Extras.Classes.Events = new Class({
     } else {
       this.pressed = event.getNode() || (this.config.enableForEdges && event.getEdge());
     }
-    this.pressed && this.config.onDragStart(this.pressed, event, evt);
+    this.pressed && this.config.onTouchStart(this.pressed, event, evt);
   },
   
   onTouchStart: function(e, win, event) {
@@ -2486,7 +2488,7 @@ Extras.Classes.Tips = new Class({
   },
   
   onMouseOver: function(e, win) {
-    //mouseover a label
+	  //mouseover a label
     var label;
     if(this.dom && (label = this.isLabel(e, win, false))) {
       this.node = this.viz.graph.getNode(label.id);
@@ -2495,7 +2497,6 @@ Extras.Classes.Tips = new Class({
   },
   
   onMouseMove: function(e, win, opt) {
-	  // console.log('line 2485');
 	// if(isExtra(e))return;
 	  // console.log(isExtra(e));
     if(this.dom && this.isLabel(e, win)) {
@@ -2613,7 +2614,7 @@ Extras.Classes.NodeStyles = new Class({
     }
     this.move = false;
   },
-  
+
   onMouseUp: function(e, win, event, isRightClick) {
 	  console.log('TEST');
     if(isRightClick) return;
@@ -4545,7 +4546,7 @@ $jit.Graph = new Class({
 	 (end code)
 	*/  
 	getNode: function(id) {
-	if(this.hasNode(id)) return this.nodes[id];
+  if(this.hasNode(id)) return this.nodes[id];
 	return false;
 	},
 
@@ -10247,9 +10248,14 @@ $jit.ST.Plot.NodeTypes = new Class({
       var width = node.getData('width'),
           height = node.getData('height'),
           npos = this.getAlignedPos(node.pos.getc(true), width, height);
-      this.nodeHelper.rectangle.contains({x:npos.x+width/2, y:npos.y+height/2}, pos, width, height);
+          // console.log({x:npos.x+width/2, y:npos.y+height/2}, pos, width, height);
+      return this.nodeHelper.rectangle.contains({x:npos.x+width/2, y:npos.y+height/2}, pos, width, height);
     }
   }
+  // 'rectangle': {
+  //   'render': $.empty,
+  //   'contains': $.lambda(false)
+  // }
 });
 
 /*
@@ -11405,55 +11411,76 @@ $jit.RGraph.$extend = true;
         return this.nodeHelper.circle.contains(npos, pos, dim);
       }
     },
-	'icon': {
-		'render': function(node, canvas){
-			        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        // this.nodeHelper.circle.render('fill', pos, dim, canvas);
-			//console.log(node.getPos());
-			var ctx = canvas.getCtx(); 
-			var pos = node.getPos(); 
-			ctx.drawImage(aliIcon, pos.toComplex().x-(12), pos.toComplex().y-(12), 24, 24);
+    'rectangle': {
+      'render': function(node, canvas) {
+        var width = node.getData('width'),
+            height = node.getData('height'),
+            pos = this.getAlignedPos(node.pos.getc(true), width, height);
+        this.nodeHelper.rectangle.render('fill', {x:pos.x+width/2, y:pos.y+height/2}, width, height, canvas);
       },
-        'contains': function(node,pos){
-			var npos = node.pos.getc(true); 
-			dim = node.getData('dim'); 
+      'contains': function(node, pos) {
+        var width = node.getData('width'),
+            height = node.getData('height'),
+            npos = this.getAlignedPos(node.pos.getc(true), width, height);
+            console.log();
+        this.nodeHelper.rectangle.contains({x:npos.x+width/2, y:npos.y+height/2}, pos, width, height);
+      }
+    },
+	  'icon': {
+      'render': function(node, canvas){
+                var pos = node.pos.getc(true), 
+              dim = node.getData('dim');
+          // this.nodeHelper.circle.render('fill', pos, dim, canvas);
+        //console.log(node.getPos());
+        var ctx = canvas.getCtx(); 
+        var pos = node.getPos();  
+        ctx.drawImage(aliIcon, pos.toComplex().x-(12), pos.toComplex().y-(12), 24, 24);
+        },
+          'contains': function(node,pos){
+        var npos = node.pos.getc(true); 
+        dim = node.getData('dim'); 
+        return this.nodeHelper.square.contains(npos, pos, dim); 
 			return this.nodeHelper.square.contains(npos, pos, dim); 
-	  }
-	},
-	'homeLoc': {
-		'render': function(node, canvas){
-			        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        // this.nodeHelper.circle.render('fill', pos, dim, canvas);
-			//console.log(node.getPos());
-			var ctx = canvas.getCtx(); 
-			var pos = node.getPos(); 
-			ctx.drawImage(locIcon, pos.toComplex().x-(40), pos.toComplex().y-(40), 80, 80);
-			ctx.drawImage(aliIcon, pos.toComplex().x-(12), pos.toComplex().y-(12), 24, 24);
-      },
-        'contains': function(node,pos){
-			var npos = node.pos.getc(true); 
-			dim = node.getData('dim'); 
+        return this.nodeHelper.square.contains(npos, pos, dim); 
+      }
+	  },
+    'homeLoc': {
+      'render': function(node, canvas){
+                var pos = node.pos.getc(true), 
+              dim = node.getData('dim');
+          // this.nodeHelper.circle.render('fill', pos, dim, canvas);
+        //console.log(node.getPos());
+        var ctx = canvas.getCtx(); 
+        var pos = node.getPos(); 
+        ctx.drawImage(locIcon, pos.toComplex().x-(40), pos.toComplex().y-(40), 80, 80);
+        ctx.drawImage(aliIcon, pos.toComplex().x-(12), pos.toComplex().y-(12), 24, 24);
+        },
+          'contains': function(node,pos){
+        var npos = node.pos.getc(true); 
+        dim = node.getData('dim'); 
+        return this.nodeHelper.square.contains(npos, pos, dim); 
 			return this.nodeHelper.square.contains(npos, pos, dim); 
-	  }
-	},
-	'location': {
-		'render': function(node, canvas){
-			        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-			this.nodeHelper.circle.render('fill', pos, dim, canvas);
-			//console.log(node.getPos());
-			var ctx = canvas.getCtx(); 
-			var pos = node.getPos(); 
-			ctx.drawImage(locIcon, pos.toComplex().x-(40), pos.toComplex().y-(40), 80, 80);
-      },
-        'contains': function(node,pos){
-			var npos = node.pos.getc(true); 
-			dim = node.getData('dim'); 
+        return this.nodeHelper.square.contains(npos, pos, dim); 
+      }
+    },
+    'location': {
+      'render': function(node, canvas){
+                var pos = node.pos.getc(true), 
+              dim = node.getData('dim');
+        this.nodeHelper.circle.render('fill', pos, dim, canvas);
+        //console.log(node.getPos());
+        var ctx = canvas.getCtx(); 
+        var pos = node.getPos(); 
+        ctx.drawImage(locIcon, pos.toComplex().x-(40), pos.toComplex().y-(40), 80, 80);
+        },
+          'contains': function(node,pos){
+        var npos = node.pos.getc(true); 
+        dim = node.getData('dim'); 
+        return this.nodeHelper.square.contains(npos, pos, dim); 
 			return this.nodeHelper.square.contains(npos, pos, dim); 
-	  }
-	}
+        return this.nodeHelper.square.contains(npos, pos, dim); 
+      }
+    }
   });
 
   /*

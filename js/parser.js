@@ -64,10 +64,10 @@ function init(json,localsjs,json2,task,custom_sys_names) {
             //nodes or edges
             Node: {
                 // height: document.getElementById(node.id).offsetHeight,
-                // height: 70,
+                height: 50,
                 width: 100,
-                // type: 'rectangle',
-                // color: '#aaa',
+                type: 'rectangle',
+                color: '#aaa',
                 overridable: true
             },
             
@@ -82,8 +82,8 @@ function init(json,localsjs,json2,task,custom_sys_names) {
                 //Change cursor style when hovering a node
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 onMouseEnter: function(eventInfo) {
-                // console.log(morphBusy);
-                // console.log(st.busy);
+                    // console.log(morphBusy);
+                    // console.log(st.busy);
                     if(morphBusy)return;
                     st.graph.saveOrgInfo(eventInfo,json);
                     st.canvas.getElement().style.cursor = 'move';
@@ -105,10 +105,11 @@ function init(json,localsjs,json2,task,custom_sys_names) {
                     st.graph.restoreOrgInfo(eventInfo.data);
                     st.fx.animate({modes: ['node-style:shadowBlur'], duration: 2000 });	
                 },                
-                onDragMove: function(node, eventInfo, e){  
-                    console.log("onDragMove");
-                    var pos = eventInfo.getPos();  
-                    node.pos.setc(pos.x, pos.y);  
+                onDragMove: function(node, eventInfo, e){ 
+                    // console.log(,);
+                    var pos = eventInfo.getPos();   
+                    // console.log("onDragMove",pos,node.pos);
+                    node.pos.setc(pos.x-this.nodeClickedX, pos.y-this.nodeClickedY);  
                     st.fx.plot();
                 },  
                 onDragEnd: function(node, eventInfo, e){  
@@ -124,7 +125,8 @@ function init(json,localsjs,json2,task,custom_sys_names) {
                 },  
                 //touch events  
                 onTouchStart: function(node, eventInfo, e) {  
-                    console.log("onTouchStart");
+                    this.nodeClickedX = eventInfo.getPos().x;
+                    this.nodeClickedY = eventInfo.getPos().y;
                   //stop the default event  
                   $jit.util.event.stop(e);  
                 },  
