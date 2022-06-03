@@ -50,7 +50,13 @@ socket.on('auth_success_firstlogin', function(data){//получаем подт�
 		},2000);
 		
 		
+		// getCookieJS('canvasoffsetX', false, function(dataX){
+		// 	getCookieJS('canvasoffsetY', false, function(dataY){
 		init(mapdata,[],"","initiate");
+			// var dataX = 0, dataY = 0;
+			// init(mapdata,[],"","initiate","",{dataX,dataY});
+		// 	},this);
+		// },this);
 	}		
 	
 });
@@ -189,6 +195,14 @@ socket.on('map_connections', function(data){
 	if(data[1].replace(/"/g,'') == cookie){
 			clientInfo.map = data[0].map;
 			init(data[0].map,[],"","initiate",data[0].custom_sys_names);
+			
+
+		// getCookieJS('canvasoffsetX', false, function(dataX){
+		// 	getCookieJS('canvasoffsetY', false, function(dataY){
+			// var dataX = 0, dataY = 0;
+			// 	init(data[0].map,[],"","initiate",data[0].custom_sys_names,{dataX,dataY});
+		// 	},this);
+		// },this);
 	}
 	// console.log('end of parse');
 	// var found = document.querySelector("[buttonCharID='"+data[1]+"']");//находим кнопку перса

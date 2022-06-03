@@ -2194,7 +2194,7 @@ Extras.Classes.Events = new Class({
 		{	//алгоритм создание связи кспейс-кспейс, высчитываются координаты двух нод и при отпускании одной ноды если они близко то связь создается
 			this.config.onDragEnd(this.pressed, event, evt);
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			console.log("Node Moved");
+			// console.log("Node Moved");
 			//console.log(this.pressed.Config.type);			
 			var nodes = this.viz.graph.nodes;
 			for (var k in nodes)
@@ -2217,8 +2217,9 @@ Extras.Classes.Events = new Class({
 					var posy2 = this.pressed.pos.y;					
 				}
 				//console.log(posx1-posx2);
-				if ((Math.abs(posx2-posx1) < 10)&&(Math.abs(posy2-posy1) < 10)&&(nodes[k].id != this.pressed.id))
+				if ((Math.abs(posx2-posx1) < 50)&&(Math.abs(posy2-posy1) < 50)&&(nodes[k].id != this.pressed.id))
 				{		
+          console.log("adj calculated");
 					var posNewX = posx2-posx1;
 					var posNewY = posy2-posy1;
 					var radiusMIN = Math.sqrt((posx2-posx1)*(posx2-posx1)+(posy2-posy1)*(posy2-posy1));
@@ -2810,8 +2811,8 @@ Extras.Classes.Navigation = new Class({
 	// }	
 	  // console.log("%c TEST","background:red;color:black");
 	  // console.log(e.button);
-	  // console.log(isRightClick);
-    if(this.config.panning == 'avoid nodes' && (this.dom? this.isLabel(e, win) : eventInfo.getNode())) return;
+	  // console.log(this.config.panning == 'avoid nodes');
+    if((this.dom? this.isLabel(e, win) : eventInfo.getNode())) return;
     var thispos = this.pos, 
         currentPos = eventInfo.getPos(),
         canvas = this.canvas,
@@ -3018,6 +3019,10 @@ var Canvas;
         timer = setTimeout(function() {
           that.getPos(true); //update canvas position
         }, 500);
+      });
+      $.addEvent(window, 'resize', function() {
+        console.log("canvas resize");
+        // console.log(document.getElementsByTagName('canvas')["infovis-canvas"].width);
       });
     },
     /*
@@ -4216,6 +4221,7 @@ $jit.Graph = new Class({
 		}
 	},
 	createNodeStyle: function(g,domElement, node,localsjs,socket){
+    // console.log(node);
 		domElement.setAttribute("color_type",node.data.$class);
 		var nodeInnerName = "";
 		if(isWh(node.data.$sysid) && (node.data.$statics)){
@@ -4412,8 +4418,11 @@ $jit.Graph = new Class({
 	setHoleNames: function(g,names){
     for(var i=0;i<names.length;i++){
       if(names[i].id == homesystemID){
-        document.getElementById(homesystemID).children[0].children["sys_custom_name"].value = names[i].name;
-		    document.getElementById(homesystemID).children[0].children["sys_custom_name"].innerHTML = names[i].name;
+        var dom_item = document.getElementById(homesystemID);
+        if(dom_item){
+          dom_item.children[0].children["sys_custom_name"].value = names[i].name;
+          dom_item.children[0].children["sys_custom_name"].innerHTML = names[i].name;
+        }
       }
     }
 		g.graph.eachNode(function(node){
@@ -8077,6 +8086,8 @@ Graph.Label.HTML = new Class({
         controller.onCreateLabel(tag, node);
         container.appendChild(tag);
         this.labels[node.id] = tag;
+        node.setData("height",tag.clientHeight);
+        node.setData("width",tag.clientWidth);
       }
 
       this.placeLabel(tag, node, controller);
@@ -10078,11 +10089,16 @@ $jit.ST.Label.DOM = new Class({
             sy = canvas.scaleOffsetY,
             posx = pos.x * sx + ox,
             posy = pos.y * sy + oy;
-	// console.log(posx,node);
+	// console.log(this.viz.config,node.id,posx);
 	// console.log(this.viz.json);
 	// var j1 = this.viz.json;
 	// console.log(this.viz.config.maxDepth);
-	var depthOffset = this.viz.config.maxDepth * 120 + 100;
+  
+  
+  var n_o = document.getElementsByTagName('canvas')["infovis-canvas"].width;
+  // console.log(n_o);
+  // var depthOffset = this.viz.config.maxDepth * 120 +n_o/2;
+  var depthOffset = n_o/2;
         if(dim.align == "center") {
             labelPos= {
                 x: Math.round(posx - w / 2 + depthOffset),//radius.width/2),
@@ -10242,6 +10258,7 @@ $jit.ST.Plot.NodeTypes = new Class({
       var width = node.getData('width'),
           height = node.getData('height'),
           pos = this.getAlignedPos(node.pos.getc(true), width, height);
+          // console.log(node.id,pos.x+width/2);
       this.nodeHelper.rectangle.render('fill', {x:pos.x+width/2, y:pos.y+height/2}, width, height, canvas);
     },
     'contains': function(node, pos) {
@@ -10387,48 +10404,57 @@ $jit.ST.Plot.EdgeTypes = new Class({
      },
     'bezier': {
        'render': function(adj, canvas) {
+         
+      var n_o = document.getElementsByTagName('canvas')["infovis-canvas"].width;
+      // console.log(n_o);
          var orn = this.getOrientation(adj),
-             nodeFrom = adj.nodeFrom, 
-             nodeTo = adj.nodeTo,
-             rel = nodeFrom._depth < nodeTo._depth,
-             begin = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
-             end =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn),
-             dim = adj.getData('dim'),
-             ctx = canvas.getCtx(),
-          radius = canvas.getSize(),
-	 depthOffset = this.viz.config.maxDepth * 120 + 100,
-		  temp = radius.width/2-depthOffset;
-         ctx.beginPath();
+            nodeFrom = adj.nodeFrom, 
+            nodeTo = adj.nodeTo,
+            rel = nodeFrom._depth < nodeTo._depth,
+            begin = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
+            end =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn),
+            dim = adj.getData('dim'),
+            ctx = canvas.getCtx(),
+            radius = canvas.getSize(),
+            // depthOffset = this.viz.config.maxDepth * 120 +n_o/2,
+            depthOffset = n_o/2,
+            temp = radius.width/2-depthOffset;
+            ctx.beginPath();
 		 
-		 // console.log(begin);
-         switch(orn) {
-           case "left":
-         ctx.moveTo(begin.x-temp, begin.y);
-             ctx.bezierCurveTo(begin.x + dim-temp, begin.y, end.x - dim-temp, end.y, end.x-temp, end.y);
-             break;
-           case "right":
-         ctx.moveTo(begin.x-temp, begin.y);
-             ctx.bezierCurveTo(begin.x - dim-temp, begin.y, end.x + dim-temp, end.y, end.x-temp, end.y);
-             break;
-           case "top":
-         ctx.moveTo(begin.x-temp, begin.y);
-             ctx.bezierCurveTo(begin.x-temp, begin.y + dim, end.x-temp, end.y - dim, end.x-temp, end.y);
-             break;
-           case "bottom":
-         ctx.moveTo(begin.x-temp, begin.y);
-             ctx.bezierCurveTo(begin.x-temp, begin.y - dim, end.x-temp, end.y + dim, end.x-temp, end.y);
-             break;
-         }
-         ctx.stroke();
+         // console.log(begin);
+        switch(orn) {
+          case "left":
+            ctx.moveTo(begin.x-temp, begin.y);
+            ctx.bezierCurveTo(begin.x + dim-temp, begin.y, end.x - dim-temp, end.y, end.x-temp, end.y);
+            break;
+          case "right":
+            ctx.moveTo(begin.x-temp, begin.y);
+            ctx.bezierCurveTo(begin.x - dim-temp, begin.y, end.x + dim-temp, end.y, end.x-temp, end.y);
+            break;
+          case "top":
+            ctx.moveTo(begin.x-temp, begin.y);
+            ctx.bezierCurveTo(begin.x-temp, begin.y + dim, end.x-temp, end.y - dim, end.x-temp, end.y);
+            break;
+          case "bottom":
+            ctx.moveTo(begin.x-temp, begin.y);
+            ctx.bezierCurveTo(begin.x-temp, begin.y - dim, end.x-temp, end.y + dim, end.x-temp, end.y);
+            break;
+        }
+        ctx.stroke();
        },
-        'contains' : function(adj, pos) {
+    'contains' : function(adj, pos) {
         var orn = this.getOrientation(adj),
             nodeFrom = adj.nodeFrom, 
             nodeTo = adj.nodeTo,
             rel = nodeFrom._depth < nodeTo._depth,
             from = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
             to =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn);
-			depthOffset = this.viz.config.maxDepth * 120 + 100,
+            
+      
+      var n_o = document.getElementsByTagName('canvas')["infovis-canvas"].width;
+      // console.log(n_o);
+      // depthOffset = this.viz.config.maxDepth * 120 +n_o/2,
+      depthOffset = n_o/2,
 			radius = this.viz.canvas.getSize(),
 			temp = radius.width/2-depthOffset;
 			from.x = from.x-temp;
@@ -10438,159 +10464,156 @@ $jit.ST.Plot.EdgeTypes = new Class({
       }
     },
     'bezier-punktir': {
-       'render': function(adj, canvas) {
-         var orn = this.getOrientation(adj),
-             nodeFrom = adj.nodeFrom, 
-             nodeTo = adj.nodeTo,
-             rel = nodeFrom._depth < nodeTo._depth,
-             begin = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
-             end =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn),
-             dim = adj.getData('dim'),
-             ctx = canvas.getCtx(),
-          radius = canvas.getSize(),
-	 depthOffset = this.viz.config.maxDepth * 120 + 100,
-		  temp = radius.width/2-depthOffset;
-         // ctx.beginPath();
-		 
-		 
-		 
-		 
-		 
-		 
-	var bezier = function(controlPoints, t) {
-		return controlPoints[t];
-  /* your code here, I'll presume it returns a 2-element array of x and y. */
-};	 
+      'render': function(adj, canvas) {        
+        var n_o = document.getElementsByTagName('canvas')["infovis-canvas"].width;
+        // console.log(n_o);
+        var orn = this.getOrientation(adj),
+        nodeFrom = adj.nodeFrom, 
+        nodeTo = adj.nodeTo,
+        rel = nodeFrom._depth < nodeTo._depth,
+        begin = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
+        end =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn),
+        dim = adj.getData('dim'),
+        ctx = canvas.getCtx(),
+        radius = canvas.getSize(),
+        // depthOffset = this.viz.config.maxDepth * 120 +n_o/2,
+        depthOffset = n_o/2,
+        temp = radius.width/2-depthOffset;
+        ctx.beginPath();//return;
+
+        var bezier = function(controlPoints, t) {
+          return controlPoints[t];
+          /* your code here, I'll presume it returns a 2-element array of x and y. */
+        };	 
 
 
-function getCubicBezierXYatPercent(startPt, controlPt1, controlPt2, endPt, percent) {
-    var x = CubicN(percent, startPt.x, controlPt1.x, controlPt2.x, endPt.x);
-    var y = CubicN(percent, startPt.y, controlPt1.y, controlPt2.y, endPt.y);
-    return ({
-        x: x,
-        y: y
-    });
-}
+        function getCubicBezierXYatPercent(startPt, controlPt1, controlPt2, endPt, percent) {
+          var x = CubicN(percent, startPt.x, controlPt1.x, controlPt2.x, endPt.x);
+          var y = CubicN(percent, startPt.y, controlPt1.y, controlPt2.y, endPt.y);
+          return ({
+            x: x,
+            y: y
+          });
+        }
 
-// cubic helper formula
-function CubicN(T, a, b, c, d) {
-    var t2 = T * T;
-    var t3 = t2 * T;
-    return a + (-a * 3 + T * (3 * a - a * T)) * T + (3 * b + T * (-6 * b + b * 3 * T)) * T + (c * 3 - c * 3 * T) * t2 + d * t3;
-}
-var calculateDashedBezier = function(controlPoints, dashPattern) {
-  var step = 1; //this really should be set by an intelligent method,
-                    //rather than using a constant, but it serves as an
-                    //example.
+          // cubic helper formula
+          function CubicN(T, a, b, c, d) {
+            var t2 = T * T;
+            var t3 = t2 * T;
+            return a + (-a * 3 + T * (3 * a - a * T)) * T + (3 * b + T * (-6 * b + b * 3 * T)) * T + (c * 3 - c * 3 * T) * t2 + d * t3;
+          }
+          var calculateDashedBezier = function(controlPoints, dashPattern) {
+            var step = 1; //this really should be set by an intelligent method,
+            //rather than using a constant, but it serves as an
+            //example.
 
-  //possibly gratuitous helper functions
-  var delta = function(p0, p1) {
-	  // console.log(p0,p1);
-    return [p1['x'] - p0['x'], p1['y'] - p0['y']];
-  };
-  var arcLength = function(p0, p1) {
-    var d = delta(p0, p1);
-    return Math.sqrt(d['x']*d['x'] + d['y'] * d['y']);
-  };
+            //possibly gratuitous helper functions
+            var delta = function(p0, p1) {
+              // console.log(p0,p1);
+              return [p1['x'] - p0['x'], p1['y'] - p0['y']];
+            };
+            var arcLength = function(p0, p1) {
+              var d = delta(p0, p1);
+              return Math.sqrt(d['x']*d['x'] + d['y'] * d['y']);
+            };
 
-  var subPaths = [];
-  var loc = bezier(controlPoints, 0);
-  var lastLoc = loc;
+            var subPaths = [];
+            var loc = bezier(controlPoints, 0);
+            var lastLoc = loc;
 
-  var dashIndex = 0;
-  var length = 0;
-  var thisPath = [];
-  for(var t = step; t <= 10; t += step) {
-    loc = bezier(controlPoints, t);
-	// console.log(lastLoc, loc);
-    length += arcLength(lastLoc, loc);
-    lastLoc = loc;
+            var dashIndex = 0;
+            var length = 0;
+            var thisPath = [];
+            for(var t = step; t <= 10; t += step) {
+              loc = bezier(controlPoints, t);
+              // console.log(lastLoc, loc);
+              length += arcLength(lastLoc, loc);
+              lastLoc = loc;
 
-    //detect when we come to the end of a dash or space
-    if(length >= dashPattern[dashIndex]) {
+              //detect when we come to the end of a dash or space
+              if(length >= dashPattern[dashIndex]) {
 
-      //if we are on a dash, we need to record the path.
-      if(dashIndex % 2 == 0)
-        subPaths.push(thisPath);
+                //if we are on a dash, we need to record the path.
+                if(dashIndex % 2 == 0)
+                subPaths.push(thisPath);
 
-      //go to the next dash or space in the pattern
-      dashIndex = (dashIndex + 1) % dashPattern.length;
+                //go to the next dash or space in the pattern
+                dashIndex = (dashIndex + 1) % dashPattern.length;
 
-      //clear the arclength and path.
-      thisPath = [];
-      length = 0;
-    }
+                //clear the arclength and path.
+                thisPath = [];
+                length = 0;
+              }
 
-    //if we are on a dash and not a space, add a point to the path.
-    if(dashIndex % 2 == 0) {
-      thisPath.push(loc['x'], loc['y']);
-    }
-  }
-  if(thisPath.length > 0)
-    subPaths.push(thisPath);
-  return subPaths;
-};
+              //if we are on a dash and not a space, add a point to the path.
+              if(dashIndex % 2 == 0) {
+                thisPath.push(loc['x'], loc['y']);
+              }
+            }
+            if(thisPath.length > 0)subPaths.push(thisPath);
+            return subPaths;
+          };
 
-//take output of the previous function and build an appropriate path
-var pathParts = function(ctx, pathParts) {
-  for(var i = 0; i < pathParts.length; i++) {
-    var part = pathParts[i];
-	  // console.log(part);
-    if(part.length > 0)
-      ctx.moveTo(part[0], part[1]);
-    for(var j = 1; j < part.length; j++) {
-		// console.log(part[2*j], part[2*j+1]);
-      ctx.lineTo(part[2*j], part[2*j+1]);
-	  j=j+1;
-	  ctx.moveTo(part[2*j], part[2*j+1]);
-    }
-  }
-};
+          //take output of the previous function and build an appropriate path
+          var pathParts = function(ctx, pathParts) {
+            for(var i = 0; i < pathParts.length; i++) {
+              var part = pathParts[i];
+              // console.log(part);
+              if(part.length > 0)
+              ctx.moveTo(part[0], part[1]);
+              for(var j = 1; j < part.length; j++) {
+                // console.log(part[2*j], part[2*j+1]);
+                ctx.lineTo(part[2*j], part[2*j+1]);
+                j=j+1;
+                ctx.moveTo(part[2*j], part[2*j+1]);
+              }
+            }
+          };
 
-//combine the above two functions to actually draw a dashed curve.
-var drawDashedBezier = function(ctx, controlPoints, dashPattern) {
-  var dashes = calculateDashedBezier(controlPoints, dashPattern);
-  ctx.beginPath();
-  // console.log(dashes);
-  ctx.moveTo(begin.x-temp, begin.y);
-  // ctx.strokeStyle = /* ... */
-  // ctx.lineWidth = /* ... */
-  pathParts(ctx, dashes);
-  // ctx.stroke();
-};
-		 
-		 
-		 
-		 
-		 // console.log(begin);
-         switch(orn) {
-           case "left":
-		   // console.log('test3');
-         ctx.moveTo(begin.x-temp, begin.y);
-		 var arr = [];
-		 for(var j=0;j<11;j++){
-			arr.push(getCubicBezierXYatPercent({'x': begin.x-temp, 'y': begin.y},{'x': begin.x + dim-temp, 'y': begin.y}, {'x': end.x - dim-temp, 'y': end.y}, {'x': end.x-temp, 'y': end.y},j/10));
-		 }
-		 
-		 // console.log(arr);
-		 drawDashedBezier(ctx,arr,[30, 10]);
-             // ctx.bezierCurveTo(begin.x + dim-temp, begin.y, end.x - dim-temp, end.y, end.x-temp, end.y);
-             break;
-           case "right":
-		   // console.log('test5');
-         ctx.moveTo(begin.x-temp, begin.y);
-             ctx.bezierCurveTo(begin.x - dim-temp, begin.y, end.x + dim-temp, end.y, end.x-temp, end.y);
-             break;
-           case "top":
-         ctx.moveTo(begin.x-temp, begin.y);
-             ctx.bezierCurveTo(begin.x-temp, begin.y + dim, end.x-temp, end.y - dim, end.x-temp, end.y);
-             break;
-           case "bottom":
-         ctx.moveTo(begin.x-temp, begin.y);
-             ctx.bezierCurveTo(begin.x-temp, begin.y - dim, end.x-temp, end.y + dim, end.x-temp, end.y);
-             break;
-         }
-         ctx.stroke();
+          //combine the above two functions to actually draw a dashed curve.
+          var drawDashedBezier = function(ctx, controlPoints, dashPattern) {
+            var dashes = calculateDashedBezier(controlPoints, dashPattern);
+            ctx.beginPath();
+            // console.log(dashes);
+            ctx.moveTo(begin.x-temp, begin.y);
+            // ctx.strokeStyle = /* ... */
+            // ctx.lineWidth = /* ... */
+            pathParts(ctx, dashes);
+            // ctx.stroke();
+          };
+                    
+                    
+                    
+                    
+          // console.log(begin);
+          switch(orn) {
+            case "left":
+              // console.log('test3');
+              ctx.moveTo(begin.x-temp, begin.y);
+              var arr = [];
+              for(var j=0;j<11;j++){
+                arr.push(getCubicBezierXYatPercent({'x': begin.x-temp, 'y': begin.y},{'x': begin.x + dim-temp, 'y': begin.y}, {'x': end.x - dim-temp, 'y': end.y}, {'x': end.x-temp, 'y': end.y},j/10));
+              }
+
+              // console.log(arr);
+              drawDashedBezier(ctx,arr,[30, 10]);
+              // ctx.bezierCurveTo(begin.x + dim-temp, begin.y, end.x - dim-temp, end.y, end.x-temp, end.y);
+              break;
+            case "right":
+              // console.log('test5');
+              ctx.moveTo(begin.x-temp, begin.y);
+              ctx.bezierCurveTo(begin.x - dim-temp, begin.y, end.x + dim-temp, end.y, end.x-temp, end.y);
+              break;
+            case "top":
+              ctx.moveTo(begin.x-temp, begin.y);
+              ctx.bezierCurveTo(begin.x-temp, begin.y + dim, end.x-temp, end.y - dim, end.x-temp, end.y);
+              break;
+            case "bottom":
+              ctx.moveTo(begin.x-temp, begin.y);
+              ctx.bezierCurveTo(begin.x-temp, begin.y - dim, end.x-temp, end.y + dim, end.x-temp, end.y);
+              break;
+          }
+          ctx.stroke();
        },
         'contains' : function(adj, pos) {
         var orn = this.getOrientation(adj),
@@ -10599,7 +10622,11 @@ var drawDashedBezier = function(ctx, controlPoints, dashPattern) {
             rel = nodeFrom._depth < nodeTo._depth,
             from = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
             to =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn);
-			depthOffset = this.viz.config.maxDepth * 120 + 100,
+            
+      var n_o = document.getElementsByTagName('canvas')["infovis-canvas"].width;
+      // console.log(n_o);
+			// depthOffset = this.viz.config.maxDepth * 120 +n_o/2,
+      depthOffset = n_o/2,
 			radius = this.viz.canvas.getSize(),
 			temp = radius.width/2-depthOffset;
 			from.x = from.x-temp;

@@ -1,5 +1,6 @@
 ﻿var labelType, useGradients, nativeTextSupport, animate;
 
+const NodeOffset = -100;
 (function() {
   var ua = navigator.userAgent,
       iStuff = ua.match(/iPhone/i) || ua.match(/iPad/i),
@@ -15,7 +16,7 @@
   animate = !(iStuff || !nativeCanvasSupport);
 })();
 
-function init(json,localsjs,json2,task,custom_sys_names) {
+function init(json,localsjs,json2,task,custom_sys_names){//,coord) {
     
         //end
         //init RGraph
@@ -64,10 +65,10 @@ function init(json,localsjs,json2,task,custom_sys_names) {
             //nodes or edges
             Node: {
                 // height: document.getElementById(node.id).offsetHeight,
-                height: 50,
+                // height: 50,
                 width: 100,
-                type: 'rectangle',
-                color: '#aaa',
+                // type: 'rectangle',
+                // color: '#aaa',
                 overridable: true
             },
             
@@ -108,12 +109,14 @@ function init(json,localsjs,json2,task,custom_sys_names) {
                 onDragMove: function(node, eventInfo, e){ 
                     // console.log(,);
                     var pos = eventInfo.getPos();   
+                    // console.log("onDragMove");
                     // console.log("onDragMove",pos,node.pos);
-                    node.pos.setc(pos.x-this.nodeClickedX, pos.y-this.nodeClickedY);  
+                    // node.pos.setc(pos.x-this.nodeClickedX, pos.y-this.nodeClickedY);  
+                    node.pos.setc(pos.x, pos.y);  
                     st.fx.plot();
                 },  
                 onDragEnd: function(node, eventInfo, e){  
-                    console.log("onDragEnd");
+                    // console.log("onDragEnd");
                     st.compute('end');  
                     st.fx.animate( {  
                     modes: [  
@@ -235,7 +238,17 @@ function init(json,localsjs,json2,task,custom_sys_names) {
         // console.log($jit.util);
         st.compute();
         //optional: make a translation of the tree
-        st.geom.translate(new $jit.Complex(-200, 0), "current");
+        
+		// getCookieJS('canvasoffsetX', false, function(dataX){
+			// getCookieJS('canvasoffsetY', false, function(dataY){
+				// canvas.translate(0,0);
+        // st.geom.translate(new $jit.Complex(dataX, dataY), "current");
+        st.geom.translate(new $jit.Complex(0,0), "current");
+        // st.geom.translate(new $jit.Complex(coord["dataX"],coord["dataY"]), "current");
+                // st.geom.translate(new $jit.Complex(getCookieJS('canvasoffsetX', false, function(dataX){return dataX;}), getCookieJS('canvasoffsetY', false, function(dataY){return dataY;})), "current");
+		
+		// 	},this);
+		// },this);
         //emulate a click on the root node.
         st.onClick(st.root);
         st.graph.setHoleNames(st,custom_sys_names);
