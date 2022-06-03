@@ -107,12 +107,11 @@ function init(json,localsjs,json2,task,custom_sys_names){//,coord) {
                     st.fx.animate({modes: ['node-style:shadowBlur'], duration: 2000 });	
                 },                
                 onDragMove: function(node, eventInfo, e){ 
-                    // console.log(,);
                     var pos = eventInfo.getPos();   
                     // console.log("onDragMove");
                     // console.log("onDragMove",pos,node.pos);
                     // node.pos.setc(pos.x-this.nodeClickedX, pos.y-this.nodeClickedY);  
-                    node.pos.setc(pos.x, pos.y);  
+                    if(node.pos)node.pos.setc(pos.x, pos.y);  
                     st.fx.plot();
                 },  
                 onDragEnd: function(node, eventInfo, e){  
