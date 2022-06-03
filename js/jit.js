@@ -2811,7 +2811,7 @@ Extras.Classes.Navigation = new Class({
 	// }	
 	  // console.log("%c TEST","background:red;color:black");
 	  // console.log(e.button);
-	  // console.log(this.config.panning == 'avoid nodes');
+	  // console.log(this.isLabel(e, win));
     if((this.dom? this.isLabel(e, win) : eventInfo.getNode())) return;
     var thispos = this.pos, 
         currentPos = eventInfo.getPos(),
