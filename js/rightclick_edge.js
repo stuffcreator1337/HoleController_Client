@@ -113,7 +113,7 @@ function	RemoveEvent(a,b,c)						{
 	document.removeEventListener(a,b,c);						}					
 function clickInsideElement( e, className,clicktoff,contoff)						{						
 	var el = e.srcElement || e.target;
-	if (( linktodel == "line")||( linktodel == "bezier")||( linktodel == "punktir")||( linktodel == "bezier-punktir")||(( el.className == "menuimg" ) || (el.className == "context-menu__link") || (el.className == "labelline-menu__link")))							{
+	if (( linktodel == "line")||( linktodel == "labelline")||( linktodel == "bezier")||( linktodel == "punktir")||( linktodel == "bezier-punktir")||(( el.className == "menuimg" ) || (el.className == "context-menu__link") || (el.className == "labelline-menu__link")))							{
 		RemoveEvent('click',clicktoff,false);								
 		RemoveEvent('click',contoff,false);
 		return el;
@@ -164,7 +164,7 @@ function conteventoff(e) 						{
 function contextListener() 						{
 	//console.log("contextListener");
 	//console.log(linktodel);
-	if ( linktodel == "line" || linktodel == "bezier"|| linktodel == "punktir"|| linktodel == "bezier-punktir") 
+	if ( linktodel == "line" || linktodel == "labelline" || linktodel == "bezier"|| linktodel == "punktir"|| linktodel == "bezier-punktir") 
 	{
 		addEvent("contextmenu", conteventoff);
 

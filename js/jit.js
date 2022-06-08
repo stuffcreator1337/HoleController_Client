@@ -2144,7 +2144,7 @@ Extras.Classes.Events = new Class({
 			{
 				var type = this.pressed.data.$type || this.pressed.Config.type;
 				
-				console.log(this.pressed);
+				// console.log(this.pressed);
 				// console.log($(this.pressed.id).querySelector("#nameContId").style.color);
 				if (this.pressedIsLine(type)&&(this.pressed.data.$alpha != 0))
 				{
@@ -2219,7 +2219,7 @@ Extras.Classes.Events = new Class({
 				//console.log(posx1-posx2);
 				if ((Math.abs(posx2-posx1) < 50)&&(Math.abs(posy2-posy1) < 50)&&(nodes[k].id != this.pressed.id))
 				{		
-          console.log("adj calculated");
+          // console.log("adj calculated");
 					var posNewX = posx2-posx1;
 					var posNewY = posy2-posy1;
 					var radiusMIN = Math.sqrt((posx2-posx1)*(posx2-posx1)+(posy2-posy1)*(posy2-posy1));
@@ -2260,41 +2260,36 @@ Extras.Classes.Events = new Class({
 						
 						//ОТКЛЮЧИЛ ВРЕМЕННО
 						// window.setTimeout(function(){ 
-							// // var kspace_dist = parent.parse_kspace.contentDocument.body.children.dest.innerHTML;
-							// var kspace_dist = "?1??";
-							// graph.edges[node1.id][node2.id].data.$labelCenter = kspace_dist + " jumps";
-							// //console.log(graph.edges[node1][node2].data.$labelCenter);
-							// //console.log();
-							// fx.animate({modes: ['edge-property:alpha'], duration: 500 });	
-							// }, 500);
-						window.setTimeout(function(){
-							getDistance(node1.data.$sysid,node2.data.$sysid,function(data1,data2){
-								// console.log(graph.edges[node1.id][node2.id]);
-								 graph.edges[node1.id][node2.id].data.$labelCenter = data2.length+"("+data1.length+") jumps";
-								 console.log(data1.length,data2.length,graph.edges[node1.id][node2.id].data.$labelCenter);
-								 // fx.animate({modes: ['edge-property:alpha'], duration: 500 });	
-							});
-						}, 1);
-						
-						var data1 = {
-							$alpha: 1,
-							$color: "#0000ff",
-							$type: "labelline",
-							$labelCenter: "",
-							$labelId: node1.id+node2.id	
-						};
-						
-						//console.log(data1);
-						//console.log(nodeFrom1);
-						this.canvas.viz.graph.addAdjacence(nodeFrom1,nodeTo1,data1);
-						graph.edges[node1.id][node2.id].data.$alpha = 1;
-						//console.log(node1.id+"-"+node2.id);
-						//ОТКЛЮЧИЛ ВРЕМЕННО
-						// console.log(node1.data.$sysid,node2);
-						create_link(node1.data.$sysid,node2.data.$sysid,"labelline");
-						/* parent.create_link.src = "action/create_link2.php?sys1=" + node1.id + "&sys2="+node2.id + "&type=labelline";
-						console.log(parent.create_link.src);
-						 */	
+            // // var kspace_dist = parent.parse_kspace.contentDocument.body.children.dest.innerHTML;
+            // var kspace_dist = "?1??";
+            // graph.edges[node1.id][node2.id].data.$labelCenter = kspace_dist + " jumps";
+            // //console.log(graph.edges[node1][node2].data.$labelCenter);
+            // //console.log();
+            // fx.animate({modes: ['edge-property:alpha'], duration: 500 });	
+            // }, 500);
+						// window.setTimeout(function(){
+            var that = this;
+            getDistance(node1.data.$sysid,node2.data.$sysid,function(data1,data2){
+              // console.log(graph.edges[node1.id][node2.id]);
+              //  graph.edges[node1.id][node2.id].data.$labelCenter = data2.length+"("+data1.length+") jumps";
+              //  console.log(data1.length,data2.length,graph.edges[node1.id][node2.id].data.$labelCenter);
+              // fx.animate({modes: ['edge-property:alpha'], duration: 500 });	
+
+
+                      
+            var data1 = {
+              $alpha: 1,
+              $color: "#0000ff",
+              $type: "labelline",
+              $labelCenter: ""+data2.length+"("+data1.length+")_jumps",
+              $labelId: node1.id+node2.id	
+            };
+
+            that.canvas.viz.graph.addAdjacence(nodeFrom1,nodeTo1,data1);
+            graph.edges[node1.id][node2.id].data.$alpha = 1;
+            // console.log(data1);
+            create_link(node1.data.$sysid,node2.data.$sysid,"labelline");
+            });
 					}
 					this.fx.animate({modes: ['edge-property:alpha'], duration: 500 });	
 					// document.cookie=this.pressed.id+"X="+this.pressed.pos.x+"; " +expires;
@@ -4464,13 +4459,20 @@ $jit.Graph = new Class({
 	},
 	setProp: function(j,adj){
 		if(j.alive == 1){
-			if(j.tc == 1){
+			if(j.status == "999"){
+				adj["data"].$type = 'none';
+        return;
+			}
+			if(j.type == "labelline"){
+				adj["data"].$type = 'labelline';
+				adj["data"].$color = '#0000FF';
+				adj["data"].$colorTrue = '#0000FF';
+				adj["data"].$labelCenter = j.labelCenter;
+        return;
+      }else if(j.tc == 1){
 				adj["data"].$type = 'bezier-punktir';
 			}else{
 				adj["data"].$type = 'bezier';
-			}
-			if(j.status == "999"){
-				adj["data"].$type = 'none';
 			}
 			if(j.mc == 1){
 				adj["data"].$color = '#FF4719';
@@ -4486,6 +4488,7 @@ $jit.Graph = new Class({
 				adj["data"].$scolor = '#CC6699';
 				adj["data"].$colorTrue = '#CC6699';
 			}
+      // console.log(adj["data"]);
 		}
 	},
 	setProps: function(g,json){
@@ -7750,7 +7753,7 @@ Graph.Plot = {
         for(var s in ctxObj) {
           ctx[s] = adj.getCanvasStyle(s);
         }
-		
+  
         this.edgeTypes[f].render.call(this, adj, canvas, animating);
         ctx.restore();
       }
@@ -10651,7 +10654,90 @@ $jit.ST.Plot.EdgeTypes = new Class({
                 to = adj.nodeTo.pos.getc(true);
             return this.edgeHelper.punktir.contains(from, to, pos, this.edge.epsilon);
         }
-	}
+	},
+  'labelline':{
+    'render': function(adj, canvas) {
+      
+   var n_o = document.getElementsByTagName('canvas')["infovis-canvas"].width;
+   // console.log(n_o);
+      var orn = this.getOrientation(adj),
+         nodeFrom = adj.nodeFrom, 
+         nodeTo = adj.nodeTo,
+         rel = nodeFrom._depth < nodeTo._depth,
+         begin = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
+         end =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn),
+         dim = adj.getData('dim'),
+         ctx = canvas.getCtx(),
+         radius = canvas.getSize(),
+         // depthOffset = this.viz.config.maxDepth * 120 +n_o/2,
+         depthOffset = n_o/2,
+         temp = radius.width/2-depthOffset,
+         bX = begin.x-temp,
+         eX = end.x-temp;
+         ctx.beginPath();
+  
+      // console.log(begin);
+     switch(orn) {
+       case "left":
+         ctx.moveTo(bX, begin.y);
+         ctx.bezierCurveTo(bX + dim, begin.y, eX - dim, end.y, eX, end.y);
+         break;
+       case "right":
+         ctx.moveTo(bX, begin.y);
+         ctx.bezierCurveTo(bX - dim, begin.y, eX + dim, end.y, eX, end.y);
+         break;
+       case "top":
+         ctx.moveTo(bX, begin.y);
+         ctx.bezierCurveTo(bX, begin.y + dim, eX, end.y - dim, eX, end.y);
+         break;
+       case "bottom":
+         ctx.moveTo(bX, begin.y);
+         ctx.bezierCurveTo(bX, begin.y - dim, eX, end.y + dim, eX, end.y);
+         break;
+      }
+      ctx.stroke();
+
+
+      var data = adj.data; 
+      // console.log(data);
+      var coord1 = adj.nodeFrom.pos.getc(true);
+      var coord2 = adj.nodeTo.pos.getc(true);
+      
+      // ctx.fillText(node.name, pos.x + width / 2, pos.y + height / 2);
+
+      // console.log(data.$labelCenter, pos1, pos2);
+      // if(!data.$labelCenter)return;
+      // console.log(data.$labelCenter);
+      var ctx = this.viz.canvas.getCtx();
+      var x = parseInt((coord1.x + coord2.x - (data.$labelCenter?data.$labelCenter.length:10 * 5)) / 2); 
+      var y = parseInt((coord1.y + coord2.y ) /2); 
+      ctx.font = "10px sans-serif";
+      ctx.fillStyle = ctx.strokeStyle = "#FFFFFF";
+      // ctx.shadowBlur = 10;
+      // ctx.textAlign = 'center';
+      // ctx.textBaseline = 'middle';
+      var lines = data.$labelCenter.split('_');
+      // console.log(data.$labelCenter);
+      for (var i = 0; i<lines.length; i++)ctx.fillText(lines[i], x-15, y + (i*10) );
+				// ctx.fillText(data.$labelCenter, x-20, y,50);
+    },
+ 'contains' : function(adj, pos) {
+     var orn = this.getOrientation(adj),
+         nodeFrom = adj.nodeFrom, 
+         nodeTo = adj.nodeTo,
+         rel = nodeFrom._depth < nodeTo._depth,
+         from = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
+         to =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn);
+
+      var n_o = document.getElementsByTagName('canvas')["infovis-canvas"].width;
+      depthOffset = n_o/2,
+      radius = this.viz.canvas.getSize(),
+      temp = radius.width/2-depthOffset;
+      from.x = from.x-temp;
+      to.x = to.x-temp;
+      return this.edgeHelper.line.contains(from, to, pos, this.edge.epsilon);
+    }
+  }
 });
 
 
@@ -11576,19 +11662,6 @@ $jit.RGraph.$extend = true;
                 var data = adj.data; 
 				var domlabel = document.getElementById(data.labelid); 
 
-				// ctx.font = node.getLabelData('style') + ' ' + node.getLabelData('size') + 'px ' + node.getLabelData('family');
-			// plotLabel: function(canvas, node, controller) {
-			// var ctx = canvas.getCtx();
-			// var pos = node.pos.getc(true);
-
-			// ctx.font = node.getLabelData('style') + ' ' + node.getLabelData('size') + 'px ' + node.getLabelData('family');
-			// ctx.textAlign = node.getLabelData('textAlign');
-			// ctx.fillStyle = ctx.strokeStyle = node.getLabelData('color');
-			// ctx.textBaseline = node.getLabelData('textBaseline');
-
-			// this.renderLabel(canvas, node, controller);
-			// },
-
 				var ctx = this.viz.canvas.getCtx();
 				var radius = this.viz.canvas.getSize(); 
 				var x = parseInt((pos.x + posChild.x - (data.$labelCenter.length * 5)) / 2); 
@@ -11596,10 +11669,8 @@ $jit.RGraph.$extend = true;
 				ctx.font = "10px sans-serif";
 				ctx.fillStyle = "#FFFFFF";
 				ctx.fillText(data.$labelCenter, x, y);
-				//console.log(ctx);
-				//console.log(data.$label);
-				 
-             },
+
+        },
         'contains' : function(adj, pos) {
             var from = adj.nodeFrom.pos.getc(true),
                 to = adj.nodeTo.pos.getc(true);
