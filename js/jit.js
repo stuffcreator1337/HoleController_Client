@@ -10577,35 +10577,26 @@ $jit.ST.Plot.EdgeTypes = new Class({
           var drawDashedBezier = function(ctx, controlPoints, dashPattern) {
             var dashes = calculateDashedBezier(controlPoints, dashPattern);
             ctx.beginPath();
-            // console.log(dashes);
             ctx.moveTo(begin.x-temp, begin.y);
-            // ctx.strokeStyle = /* ... */
-            // ctx.lineWidth = /* ... */
             pathParts(ctx, dashes);
-            // ctx.stroke();
           };
                     
-                    
-                    
-                    
-          // console.log(begin);
           switch(orn) {
             case "left":
-              // console.log('test3');
               ctx.moveTo(begin.x-temp, begin.y);
               var arr = [];
               for(var j=0;j<11;j++){
                 arr.push(getCubicBezierXYatPercent({'x': begin.x-temp, 'y': begin.y},{'x': begin.x + dim-temp, 'y': begin.y}, {'x': end.x - dim-temp, 'y': end.y}, {'x': end.x-temp, 'y': end.y},j/10));
               }
-
-              // console.log(arr);
               drawDashedBezier(ctx,arr,[30, 10]);
-              // ctx.bezierCurveTo(begin.x + dim-temp, begin.y, end.x - dim-temp, end.y, end.x-temp, end.y);
               break;
             case "right":
-              // console.log('test5');
-              ctx.moveTo(begin.x-temp, begin.y);
-              ctx.bezierCurveTo(begin.x - dim-temp, begin.y, end.x + dim-temp, end.y, end.x-temp, end.y);
+              ctx.moveTo(end.x-temp, end.y);
+              var arr = [];
+              for(var j=0;j<11;j++){
+                arr.push(getCubicBezierXYatPercent({'x': end.x-temp, 'y': end.y},{'x': end.x + dim-temp, 'y': end.y}, {'x': begin.x - dim-temp, 'y': begin.y}, {'x': begin.x-temp, 'y': begin.y},j/10));
+              }
+              drawDashedBezier(ctx,arr,[30, 10]);
               break;
             case "top":
               ctx.moveTo(begin.x-temp, begin.y);
