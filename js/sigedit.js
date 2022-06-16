@@ -34,13 +34,12 @@ function openSysTable(id,name,color,display,sigs){
 	insertSigs(sigs);
 	document.getElementById("systemPanelID").style.display = display;
 	// console.log(id,name,color);
-	// console.log(document.getElementById("php_system"));
-	document.getElementById("php_system").innerHTML = name;
-	document.getElementById("php_system2").innerHTML = name;
+	document.getElementById("sigs_systemname").innerHTML = name;
+	document.getElementById("annotations_systemname").innerHTML = name;
 	document.getElementById("hiddenSyID").innerHTML = id;
 	document.getElementById("hiddenSyst").innerHTML = name;
-	document.getElementById("php_system").style.color = "#"+color;
-	document.getElementById("php_system2").style.color = "#"+color;
+	document.getElementById("sigs_systemname").style.color = "#"+color;
+	document.getElementById("annotations_systemname").style.color = "#"+color;
 	
 	var syscont = document.getElementById(id);
 	var text = syscont.children["nodeDivID"].children["sys_custom_name"].textContent;

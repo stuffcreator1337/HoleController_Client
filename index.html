@@ -235,11 +235,11 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 				<li><a id="tab-content5" onclick='switchtab(2);clear_area_content();' ><label for="tab5" >annotation</label></a></li>
 			</ul>
 			<br>
-			<text id='hiddenSigC' style='display:none'>php_sig_post</text>
-			<text id='hiddenSigs' style='display:none'>php_sig_post</text>
-			<text id='hiddenSyst' style='display:none'>php_system</text>
-			<text id='hiddenSyID' style='display:none'>php_sysid</text>
-			<text id='hiddenCoID' style='display:none'>php_res_ID</text>
+			<text id='hiddenSigC' style='display:none'></text>
+			<text id='hiddenSigs' style='display:none'></text>
+			<text id='hiddenSyst' style='display:none'></text>
+			<text id='hiddenSyID' style='display:none'></text>
+			<text id='hiddenCoID' style='display:none'></text>
 			<form id='form1' class='leftform' name='form1' method='post' style='position: relative;z-index:11;display:'>
 				<br>
 				<div style='overflow-y: auto;height:auto;max-height: 151px;min-height: 25px;width:250px'>
@@ -248,7 +248,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 				<textarea class='textarea' style='resize: none;color:#ffffff;background-color:#332933;' rows='2' cols='28' id='sigsid' name='sigsname' ></textarea>
 				<br>
 				<text id='sigs' style='text-align:center;'>
-					<a id='php_system'  onclick='CCPEVE.showInfo(5, 111); return false;' href='#' ></a> Sigs:<text id='numberofsigs'>php_number</text>
+					<a id='sigs_systemname'   ></a> Sigs:<text id='numberofsigs'></text>
 				</text>
 
 				<span class='checkbox' >
@@ -277,11 +277,11 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 					<input id='corpInput' type="text" name="format" value="" oninput='searchCorp(this);' style='resize: none;color:#ffffff;background-color:#001F1F;'/>
 					</div>
 					</td></tr>
-					<tr><td><text cols='10'>Other:</text></td><td><textarea id='resCommInput' style='resize: none;color:#ffffff;background-color:#001F1F;' rows='2' cols='21' >php_res_info</textarea></td></tr>
+					<tr><td><text cols='10'>Other:</text></td><td><textarea id='resCommInput' style='resize: none;color:#ffffff;background-color:#001F1F;' rows='2' cols='21' ></textarea></td></tr>
 				</table>
 				<!--<text>php //echo $res_post;</text>-->
 				<text id='sigs' style='text-align:center;'>
-					<a style='color:#fff', onclick='CCPEVE.showInfo(5, 111); return false;' href='#' >php_system</a>
+					
 				</text>
 
 				<input class='submit_button' type='button' name='button' id='button' value='Update' onclick='resUpdateButton()'/>
@@ -291,7 +291,7 @@ const loginURL = 'https://'+currentServer["login"]+'eveonline.com/oauth/authoriz
 				<br>
 				<table>
 				<tr><td><textarea id='system_name' style='resize: none;color:#ffffff;background-color:#001F1F;' rows='2' cols='21' ></textarea></td></tr>
-				<tr><td><a id='php_system2'  href='#' ></a></td></tr>
+				<tr><td><a id='annotations_systemname'  ></a></td></tr>
 				<tr><td><input class='submit_button' type='button' name='button' id='button' value='Update' onclick='sendSysName(this);'/></td></tr>
 				</table>
 			</form>

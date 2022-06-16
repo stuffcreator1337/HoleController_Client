@@ -39,13 +39,13 @@ body.appendChild(form);
 		clickabbleSystem.style='text-align:center;';
 	form.appendChild(clickabbleSystem);
 
-		var link = document.createElement('a');
-			link.style='color:#$sys_color';
-			link.onclick='CCPEVE.showInfo(5, $sys_id); return false;';
-			link.href='#';
-			link.innerHTML =  '<?php echo $sig_post; ?>';
-		console.log(link.innerHTML);
-		clickabbleSystem.appendChild(link);	
+		// var link = document.createElement('a');
+		// 	link.style='color:#$sys_color';
+		// 	link.onclick='CCPEVE.showInfo(5, $sys_id); return false;';
+		// 	link.href='#';
+		// 	link.innerHTML =  '<?php echo $sig_post; ?>';
+		// console.log(link.innerHTML);
+		// clickabbleSystem.appendChild(link);	
 		
 			
 	

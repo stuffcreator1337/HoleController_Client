@@ -2291,7 +2291,9 @@ Extras.Classes.Events = new Class({
             create_link(node1.data.$sysid,node2.data.$sysid,"labelline");
             });
 					}
-					this.fx.animate({modes: ['edge-property:alpha'], duration: 500 });	
+          window.setTimeout(function(){ 
+					fx.animate({modes: ['edge-property:alpha'], duration: 500 });	
+          }, 500);
 					// document.cookie=this.pressed.id+"X="+this.pressed.pos.x+"; " +expires;
 					// document.cookie=this.pressed.id+"Y="+this.pressed.pos.y+"; " +expires;	
 				}
