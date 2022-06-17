@@ -4520,6 +4520,9 @@ $jit.Graph = new Class({
 			that.replot(json,g,data_link_edit,'map_replot',state);
 			// that.setProps(g,data[0]);
 		 });
+		socket.on('zkb_data', function(kbdata){
+      kbparse(kbdata);
+    });
 		socket.on('new_chars_position', function(data_chars){
 			// console.log("%c New char location recieved","background:pink;color:black");
 			if(data_chars[1] == 'all'){				

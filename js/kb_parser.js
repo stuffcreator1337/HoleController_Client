@@ -1,5 +1,45 @@
-function callAjaxfunc(sysid,callback) {		
+function kbparse(data) {
+	// var a1 = 'sys_'+data1.solar_system_id;
+	// var a2 = 'kill_'+data1.killmail_id;	
+	// color = "red";
+	getCookieJS("lastKill", false, function(cok){
+		// console.log(cok);
+		if(cok){
+		var val = JSON.parse(cok);
+		console.log(val,data[0]);
+		// console.log(val);
+		for(var s in data[0]) {
+			if(val[s]){
+				// console.log("system found");
+				var color = "white";
+				var namecont = document.getElementById(s.substring(4, 12));
+				// console.log(namecont.children["nodeDivID"].children["nameContId"].style);
+				console.log(s,data[0][s],val[s]);
+				if(data[0][s] == ''){
+					color = "white";
+				}else if(data[0][s] == val[s]){
+					// console.log("no new kills",prop,val[prop],result[0].killmail_id);
+					color = "orange";
+				}else{
+					// console.log("yes new kills",prop,val[prop],result[0].killmail_id);
+					color = "red";
+					// val[prop] = result[0].killmail_id;
+				}
+				namecont.children["nodeDivID"].children["nameContId"].style.color = color;
+			}else{
+				val[s] = data[0][s];
+			}			
+		}
+		console.log(val);
+		setCookie('lastKill',val);
+		// console.log(val);
 		
+		}
+		// callback(result,color);
+	});
+}		
+function callAjaxfunc(sysid,callback) {		
+		return;
 $.ajax({
     type: 'GET',
     url: 'https://zkillboard.com/api/systemID/'+sysid+'/pastSeconds/43200/',
